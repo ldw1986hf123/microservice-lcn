@@ -1,0 +1,125 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.ldw.springcloud</groupId>
+	<artifactId>microservice</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<modules>
+		<module>microservice-api</module>
+		<module>microservice-privoider-dept-8001</module>
+		<module>microservice-comsumer-dept-80</module>
+		<module>microservice-eureka-7001</module>
+		<module>microservice-eureka-7002</module>
+		<module>microservice-eureka-7003</module>
+		<module>microservice-privoider-dept-8002</module>
+		<module>microservice-privoider-dept-8003</module>
+		<module>microservice-comsumer-dept-feign</module>
+		<module>microservice-privoider-hystrix-dept-8001</module>
+		<module>microservice-comsumer-dept-hystrix-dashbord</module>
+		<module>microservice-zuul-gateway-9527</module>
+		<module>microservice-lcnTransactionManager-7970</module>
+	</modules>
+
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spring.version>5.0.0.RELEASE</spring.version>
+		<junit.version>4.12</junit.version>
+		<log4j.version>1.2.17</log4j.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>Greenwich.SR1</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>2.1.3.RELEASE</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!-- Mysql -->
+			<!--<dependency>-->
+				<!--<groupId>mysql</groupId>-->
+				<!--<artifactId>mysql-connector-java</artifactId>-->
+				<!--<version>5.0.4</version>-->
+			<!--</dependency>-->
+
+			<!-- Druid -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid</artifactId>
+				<version>1.0.31</version>
+			</dependency>
+
+			<!-- spring-mybatis -->
+			<dependency>
+				<groupId>org.mybatis.spring.boot</groupId>
+				<artifactId>mybatis-spring-boot-starter</artifactId>
+				<version>1.3.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mybatis.spring.boot</groupId>
+				<artifactId>spring-boot-starter-web</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.mybatis.spring.boot</groupId>
+				<artifactId>spring-boot-starter-jetty</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.mybatis.spring.boot</groupId>
+				<artifactId>spring-boot-starter-test</artifactId>
+			</dependency>
+			<!-- spring-mybatis -->
+
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<!-- https://mvnrepository.com/artifact/log4j/log4j -->
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${log4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>springloaded</artifactId>
+				<version>1.2.8.RELEASE</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+
+	<build>
+		<finalName>microservice</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<delimiters>
+						<delimiter>$</delimiter>
+					</delimiters>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
+
