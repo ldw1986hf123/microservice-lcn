@@ -9,7 +9,7 @@ spring:
     name: microservice-dept
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/cloudDB01
+    url: jdbc:mysql://localhost:3306/cloudDB01?serverTimezone=UTC
     username: root
     password:
 eureka:
