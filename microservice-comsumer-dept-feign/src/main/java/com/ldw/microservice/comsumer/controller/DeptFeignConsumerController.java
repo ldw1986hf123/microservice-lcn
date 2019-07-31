@@ -5,6 +5,7 @@ import com.ldw.microservice.entity.Dept;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,13 +20,13 @@ public class DeptFeignConsumerController {
     @Autowired
     private DeptSercice deptSercice;
 
-    @RequestMapping("/comsumer/dept/add")
+    @RequestMapping(value = "/comsumer/dept/add", method = RequestMethod.POST)
     public boolean addDept(Dept dept) {
         System.out.println("dept :" + dept);
         return deptSercice.addDpet(dept);
     }
 
-    @RequestMapping("/comsumer/dept/lcnTxTestAdd")
+    @RequestMapping(value = "/comsumer/dept/lcnTxTestAdd", method = RequestMethod.POST)
     public void lcnTxTestAdd() {
         Dept dept1 = new Dept();
         dept1.setDeptNo(System.currentTimeMillis());
@@ -34,7 +35,7 @@ public class DeptFeignConsumerController {
     }
 
 
-    @RequestMapping("/comsumer/dept/get/{id}")
+    @RequestMapping(value = "/comsumer/dept/get/{id}", method = RequestMethod.POST)
     public Dept get(@PathVariable("id") Long id) {
         System.out.println("comsumer get");
         Dept dept = deptSercice.findById(id);
@@ -42,7 +43,7 @@ public class DeptFeignConsumerController {
     }
 
     @SuppressWarnings("rawtypes")
-    @RequestMapping("/comsumer/dept/list")
+    @RequestMapping(value = "/comsumer/dept/list", method = RequestMethod.POST)
     public List list() {
         System.out.println("comsumer list");
         return deptSercice.findAll();
