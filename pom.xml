@@ -19,7 +19,8 @@
 		<module>microservice-comsumer-dept-hystrix-dashbord</module>
 		<module>microservice-zuul-gateway-9527</module>
 		<module>microservice-lcnTransactionManager-7970</module>
-	</modules>
+        <module>microservice-spider</module>
+    </modules>
 
 
 	<properties>
@@ -79,7 +80,6 @@
 				<artifactId>spring-boot-starter-test</artifactId>
 			</dependency>
 			<!-- spring-mybatis -->
-
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
