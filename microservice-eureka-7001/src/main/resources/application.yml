@@ -3,6 +3,9 @@ server:
 eureka:
   instance:
     hostname: eureka7001.com
+  server:
+    enable-self-preservation: true
+    eviction-interval-timer-in-ms: 1000
   client:
     fetch-registry: false
     register-with-eureka: false
