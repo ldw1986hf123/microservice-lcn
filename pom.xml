@@ -19,7 +19,6 @@
 		<module>microservice-comsumer-dept-hystrix-dashbord</module>
 		<module>microservice-zuul-gateway-9527</module>
 		<module>microservice-lcnTransactionManager-7970</module>
-        <module>microservice-spider</module>
         <module>microservice-provider-docker_8004</module>
     </modules>
 
