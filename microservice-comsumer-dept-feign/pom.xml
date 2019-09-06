@@ -27,10 +27,10 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
-		<dependency>
+	<!--	<dependency>
 			<groupId>org.txlcn.demo</groupId>
 			<artifactId>txlcn-demo-common</artifactId>
-		</dependency>
+		</dependency>-->
 		<dependency>
 			<groupId>com.codingapi.txlcn</groupId>
 			<artifactId>txlcn-tc</artifactId>

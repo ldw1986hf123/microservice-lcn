@@ -33,7 +33,7 @@ public class SayController {
     @ApiOperation(value = "修改用户密码", notes = "根据用户id修改密码")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful — 请求已完成"),
-//            @ApiResponse(code = 400, message = "请求中有语法问题，或不能满足请求")
+            @ApiResponse(code = 400, message = "请求中有语法问题，或不能满足请求")
     })
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "userId", value = "用户ID", required = true, dataType = "int"),

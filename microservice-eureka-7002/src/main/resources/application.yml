@@ -1,6 +1,9 @@
 server:
   port: 7002
 eureka:
+  server:
+    enable-self-preservation: true
+    eviction-interval-timer-in-ms: 1000
   instance:
     hostname: eureka7002.com
   client:
