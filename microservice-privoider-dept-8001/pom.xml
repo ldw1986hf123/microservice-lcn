@@ -57,7 +57,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.ldw.microservice.docker.DeptProviderDocker_8004</mainClass>
+                    <mainClass>com.ldw.microservice.DeptProvider8001_App</mainClass>
                     <layout>JAR</layout>
                 </configuration>
                 <executions>
