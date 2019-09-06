@@ -69,10 +69,7 @@
 			</dependency>
 
 
-			<dependency>
-				<groupId>org.mybatis.spring.boot</groupId>
-				<artifactId>spring-boot-starter-test</artifactId>
-			</dependency>
+
 			<!-- spring-mybatis -->
 			<dependency>
 				<groupId>junit</groupId>
