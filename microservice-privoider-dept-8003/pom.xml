@@ -28,12 +28,10 @@
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 
-		<!-- Druid -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
 		</dependency>
-		<!-- Druid -->
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter</artifactId>
