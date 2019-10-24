@@ -9,9 +9,9 @@ import com.ldw.microservice.entity.Dept;
 @SuppressWarnings("rawtypes")
 @Mapper
 public interface DeptDao {
-	public boolean addDpet(Dept dept);
+	 boolean addDpet(Dept dept);
 
-	public Dept findById(Long id);
+	 Dept findById(Long id);
 
-	public List findAll();
+	 List findAll();
 }

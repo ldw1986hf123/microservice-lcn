@@ -5,10 +5,10 @@ import java.util.List;
 import com.ldw.microservice.entity.Dept;
 
 public interface DeptSercice {
-	public boolean addDpet(Dept dept);
+	 boolean addDpet(Dept dept);
 
-	public Dept findById(Long id);
+	 Dept findById(Long id);
 
 	@SuppressWarnings("rawtypes")
-	public List findAll();
+	 List findAll();
 }
