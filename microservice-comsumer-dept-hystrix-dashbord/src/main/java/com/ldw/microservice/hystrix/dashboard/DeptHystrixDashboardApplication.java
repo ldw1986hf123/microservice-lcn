@@ -11,5 +11,4 @@ public class DeptHystrixDashboardApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DeptHystrixDashboardApplication.class, args);
 	}
-
 }

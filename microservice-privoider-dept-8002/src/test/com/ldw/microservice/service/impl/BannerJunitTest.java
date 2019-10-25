@@ -26,13 +26,13 @@ public class BannerJunitTest {
 
 
     @Test
-    public void addTest(){
-        BannerConfig bannerConfig=new BannerConfig();
-        bannerConfig.setId("22");
+    public void addTest() {
+        BannerConfig bannerConfig = new BannerConfig();
+        bannerConfig.setId("12");
         bannerConfig.setBannerName("a");
         bannerConfig.setImageURL("asda");
         bannerConfig.setClientId("1");
-        bannerConfigService.addBannerConfig(bannerConfig);
+        System.out.println(bannerConfigService.addBannerConfig(bannerConfig));
     }
 
 }

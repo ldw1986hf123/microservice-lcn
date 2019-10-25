@@ -4,7 +4,7 @@ eureka:
   instance:
     hostname: eureka7003.com
   server:
-    enable-self-preservation: true
+    enable-self-preservation: false #（设为false，关闭自我保护主要）
     eviction-interval-timer-in-ms: 1000
   client:
     fetch-registry: false
