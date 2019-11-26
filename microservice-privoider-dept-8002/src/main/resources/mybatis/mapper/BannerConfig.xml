@@ -24,5 +24,16 @@
         )
     </insert>
 
+    <select id="staticBannerClick"  resultType="com.ldw.microservice.service.vo.BannerClickVo">
+      SELECT
+        banner_name as bannerName,
+        noted ,
+        COUNT( 'noted' ) as clickCnt
+      FROM
+        banner_config bc,${tableName} ol
+      WHERE ol.noted = bc.id
+      GROUP BY ol.noted
+    </select>
+
 
 </mapper>

@@ -6,6 +6,6 @@ import org.springframework.boot.Banner;
 
 import java.util.List;
 
-public interface BannerConfigSercice {
+public interface BannerConfigService {
 	BannerConfig findById(String id);
 }
