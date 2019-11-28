@@ -4,7 +4,7 @@ server:
 mybatis:
 #  configuration:
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  config-location: classpath:mybatis/mybatis.cfg.xml
+#  config-location: classpath:mybatis/mybatis.cfg.xml
   type-aliases-package: com.ldw.microservice.entity
   mapper-locations: mybatis/mapper/**/*.xml
 spring:

@@ -47,14 +47,15 @@ public class OperLogServiceImplTest {
         }
 
     }
+
     @Test
     public void getPage() {
         PageHelper.startPage(1, 10);
-        OperLog param=new OperLog();
+        OperLog param = new OperLog();
         param.setNoted("3");
         List<OperLog> list = operLogService.getPage(param);//查询
         // 取商品列表
-        for(OperLog item : list) {
+        for (OperLog item : list) {
             System.out.println(item);
         }
         // 取分页信息
@@ -62,5 +63,13 @@ public class OperLogServiceImplTest {
         long total = pageInfo.getTotal(); //获取总记录数
         System.out.println("共有商品信息：" + total);
     }
+
+    @Test
+    public void getPageWithAnnotation() {
+        OperLog operLog = new OperLog();
+        operLog.setNoted("3");
+        operLogService.getPageWithAnnotation(operLog);
+    }
+
 
 }
