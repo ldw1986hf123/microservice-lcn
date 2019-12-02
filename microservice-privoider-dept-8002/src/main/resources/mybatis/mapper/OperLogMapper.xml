@@ -14,11 +14,25 @@
       (#{createTime,jdbcType=TIMESTAMP}, #{noted,jdbcType=CHAR} )
   </insert>
 
-    <select id="getPage" resultType="OperLog"  parameterType="com.ldw.microservice.entity.OperLog">
+    <select id="getPage" resultType="OperLog" parameterType="com.ldw.microservice.entity.OperLog">
         SELECT * FROM oper_log_201908
         WHERE noted=${noted}
     </select>
 
+    <select id="getByCondition" resultType="OperLog" parameterType="com.ldw.microservice.entity.OperLog">
+        SELECT * FROM oper_log_201908
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+            <if test="createTime != null">
+                AND create_time = #{createTime}
+            </if>
+            <if test="noted != null">
+                AND noted = #{noted}
+            </if>
+        </where>
+    </select>
 
     <insert id="insertSelective" parameterType="com.ldw.microservice.entity.OperLog">
         insert into oper_log_201908

@@ -14,4 +14,6 @@ public interface OperLogMapper {
 
 
     List getPage(OperLog mapParam);
+
+    List getByCondition(OperLog mapParam);
 }
