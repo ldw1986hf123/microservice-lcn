@@ -1,6 +1,7 @@
-package com.ldw.microservice.dao;
+package  com.ldw.microservice.dao;
 
 import com.ldw.microservice.DeptProvider8002_App;
+import com.ldw.microservice.dao.OperLogMapper;
 import com.ldw.microservice.entity.OperLog;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,6 +28,7 @@ public class OperLogMapperTest {
 
     @Test
     public void insert() {
+        System.out.println("asdasd");
     }
 
     @Test
@@ -49,5 +51,7 @@ public class OperLogMapperTest {
 
     }
 
-
+    public static void main(String args[] ){
+        System.out.println("asda");
+    }
 }

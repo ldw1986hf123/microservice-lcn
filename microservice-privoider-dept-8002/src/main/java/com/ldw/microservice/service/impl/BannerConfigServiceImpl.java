@@ -2,6 +2,7 @@ package com.ldw.microservice.service.impl;
 
 import com.ldw.microservice.dao.BannerConfigDao;
 import com.ldw.microservice.entity.BannerConfig;
+import com.ldw.microservice.entity.OperLog;
 import com.ldw.microservice.service.BannerConfigService;
 import com.ldw.microservice.service.vo.BannerClickVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,4 +59,15 @@ public class BannerConfigServiceImpl implements BannerConfigService {
         });
         return resultList;
     }
+
+    public OperLog modifyCurrency(String currency) throws Exception {
+        System.out.println("modifyCurrency ");
+        OperLog operLog=new OperLog();
+        operLog.setId("2");
+        return operLog;
+//        String s=null;
+//        System.out.println(s.getBytes());
+    }
+
+
 }
