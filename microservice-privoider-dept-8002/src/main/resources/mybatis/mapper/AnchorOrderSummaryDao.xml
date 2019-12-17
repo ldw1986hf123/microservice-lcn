@@ -4,16 +4,15 @@
     <resultMap id="AnchorOrderSummary" type="com.ldw.microservice.entity.AnchorOrderSummary">
         <id property="id" column="id"/>
         <result property="currency" jdbcType="VARCHAR" column="currency"/>
-        <result property="anchorCurrency"  jdbcType="VARCHAR"  column="anchor_currency"/>
-        <result property="actualAmount"   jdbcType="DECIMAL"  column="actual_amount"/>
-        <result property="anchorAmount" jdbcType="DECIMAL"  column="anchor_amount"/>
+        <result property="anchorCurrency" jdbcType="VARCHAR" column="anchor_currency"/>
+        <result property="actualAmount" jdbcType="DECIMAL" column="actual_amount"/>
+        <result property="anchorAmount" jdbcType="DECIMAL" column="anchor_amount"/>
     </resultMap>
 
     <sql id="column">id, currency,anchor_currency,actual_amount,anchor_amount</sql>
 
     <select id="findById" resultType="AnchorOrderSummary" parameterType="java.lang.Integer">
-        select
-        <include refid="column"></include>
+        select id, currency,anchor_currency, /*CONVERT(actual_amount,DECIMAL(10,4))as*/ actual_amount   ,anchor_amount
         FROM anchor_order_summary
         where id=#{id}
     </select>
