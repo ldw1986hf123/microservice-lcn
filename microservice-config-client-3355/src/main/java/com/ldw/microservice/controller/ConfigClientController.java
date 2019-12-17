@@ -1,3 +1,4 @@
+/*
 package com.ldw.microservice.controller;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -23,3 +24,4 @@ public class ConfigClientController {
     }
 
 }
+*/
