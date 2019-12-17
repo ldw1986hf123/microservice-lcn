@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ldw.microservice.dao.AnchorOrderSummaryDao">
+    <resultMap id="AnchorOrderSummary" type="com.ldw.microservice.entity.AnchorOrderSummary">
+        <id property="id" column="id"/>
+        <result property="currency" jdbcType="VARCHAR" column="currency"/>
+        <result property="anchorCurrency"  jdbcType="VARCHAR"  column="anchor_currency"/>
+        <result property="actualAmount"   jdbcType="DECIMAL"  column="actual_amount"/>
+        <result property="anchorAmount" jdbcType="DECIMAL"  column="anchor_amount"/>
+    </resultMap>
+
+    <sql id="column">id, currency,anchor_currency,actual_amount,anchor_amount</sql>
+
+    <select id="findById" resultType="AnchorOrderSummary" parameterType="java.lang.Integer">
+        select
+        <include refid="column"></include>
+        FROM anchor_order_summary
+        where id=#{id}
+    </select>
+
+    <insert id="addRecord" parameterType="AnchorOrderSummary">
+        insert into anchor_order_summary(id,currency,anchor_currency,actual_amount,anchor_amount)
+        values (
+          #{id},#{currency},#{anchorCurrency},#{actualAmount},#{anchorAmount}
+        )
+    </insert>
+
+</mapper>

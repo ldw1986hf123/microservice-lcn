@@ -10,7 +10,7 @@ spring:
     name: microservice-dept
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/cloudDB02?serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/huobi_pool?serverTimezone=UTC
     username: root
     password: aaaaa888
 eureka:
