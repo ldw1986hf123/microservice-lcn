@@ -4,3 +4,10 @@ mybatis:
   config-location: classpath:mybatis/mybatis.cfg.xml
   type-aliases-package: com.ldw.microservice.entity
   mapper-locations: mybatis/mapper/**/*.xml
+
+eureka:
+  client:
+    healthcheck:
+      enabled: true   #开启健康检查（需要spring-boot-starter-actuator依赖）
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/

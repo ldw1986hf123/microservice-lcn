@@ -4,5 +4,5 @@ spring:
       server:
       name: microservice-config-client
       profile: dev
-      label: master
-      uri: http://config3344.com:3344
+      label: useSwagger
+      uri: http://localhost:3301/
