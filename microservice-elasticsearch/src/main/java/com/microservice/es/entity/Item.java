@@ -6,8 +6,7 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 
-/*
-@Document 作用在类，标记实体类为文档对象，一般有两个属性
+/*@Document 作用在类，标记实体类为文档对象，一般有两个属性
         indexName：对应索引库名称
         type：对应在索引库中的类型
         shards：分片数量，默认5
@@ -26,9 +25,10 @@ Date：日期类型
 elasticsearch可以对日期格式化为字符串存储，但是建议我们存储为毫秒值，存储为long，节省空间。
 index：是否索引，布尔类型，默认是true
 store：是否存储，布尔类型，默认是false
-analyzer：分词器名称，这里的ik_max_word即使用ik分词器
+analyzer：分词器名称，这里的ik_max_word即使用ik分词器*/
 
-  */
+
+
 @Document(indexName = "item", type = "docs")
 public class Item {
 
