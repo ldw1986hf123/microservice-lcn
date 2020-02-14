@@ -20,6 +20,7 @@
 		<module>microservice-zuul-gateway-9527</module>
 		<module>microservice-lcnTransactionManager-7970</module>
         <module>microservice-provider-docker_8004</module>
+        <module>microservice-gateway</module>
     </modules>
 
 

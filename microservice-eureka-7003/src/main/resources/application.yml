@@ -7,8 +7,13 @@ eureka:
     enable-self-preservation: false #（设为false，关闭自我保护主要）
     eviction-interval-timer-in-ms: 1000
   client:
-    fetch-registry: false
-    register-with-eureka: false
+    fetch-registry: true
+    register-with-eureka: true
     service-url:
       #      defaultZone: http://eureka7003.com:7003/eureka/
       defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/
+
+
+spring:
+  application:
+    name: microservice-eureka
