@@ -11,11 +11,11 @@ server:
 eureka:
   client:
     fetch-registry: true
-    register-with-eureka: false     # 是否注册到eureka
+    register-with-eureka: true     # 是否注册到eureka
     service-url:
       defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
   instance:
-    prefer-ip-address: false
+    prefer-ip-address: true
     hostname: microservice-gateway
 
 
@@ -35,9 +35,8 @@ spring:
             allowedMethods:
               - GET
               - POST
-      #    路由定义
+      #    路由定义   也可以通过类定义
       routes:
-
         - id: baidu
           uri: https://www.baidu.com
           predicates:
@@ -52,12 +51,15 @@ spring:
           filters:
             - StripPrefix=1
 
-        - id: sina
-          uri: https://www.sina.com.cn/
+        - id: gate-way-service
+          uri: lb://microservice-gateway
           predicates:
-            - Path=/sina/**
+            - Path=/gate-service/**
           filters:
             - StripPrefix=1
+
+  application:
+    name: microservice-gateway
 
 org:
   my:
