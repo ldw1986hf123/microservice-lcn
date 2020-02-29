@@ -1,19 +1,15 @@
-###################################
 #服务启动端口的配置
-###################################
 server:
   port: 9527
 
-###############################################################
 # eureka 的相关配置
 # 如果不需要 结合eureka 使用，可以不要这一段配置
-###############################################################
 eureka:
   client:
     fetch-registry: true
     register-with-eureka: true     # 是否注册到eureka
     service-url:
-      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+      defaultZone: http://peer1:7001/eureka/,http://peer2:7001/eureka/
   instance:
     prefer-ip-address: true
     hostname: microservice-gateway
@@ -21,13 +17,9 @@ eureka:
 
 spring:
   cloud:
-    #################################
     #   gateway相关配置
-    #################################
     gateway:
-      ################################
       # 配置允许跨域请求
-      ################################
       globalcors:
         cors-configurations:
           '[/**]':
@@ -60,15 +52,3 @@ spring:
 
   application:
     name: microservice-gateway
-
-org:
-  my:
-    jwt:
-      #跳过认证的路由
-      skip-auth-urls:
-        - /baidu
-      ############################################
-      #   有效时长
-      #     单位：d:天、h:小时、m:分钟、s:秒
-      ###########################################
-      effective-time: 1m

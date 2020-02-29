@@ -53,7 +53,7 @@ public class AuthController {
                     + "\t getHost: " + serviceInstance.getHost()
                     + "\t  getPort:" + serviceInstance.getPort());
         }
-        return listServiceInstance;
+        return list;
     }
 
 }
