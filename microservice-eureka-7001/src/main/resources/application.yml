@@ -1,6 +1,12 @@
+server:
+  port: 7001
+
+spring:
+  profiles:
+    active: ${eureka_env_name}
 ---
 spring:
-  profiles: peer1                 # 指定profile=peer1
+  profiles: test-21           # 指定profile=peer1
   application:
     name: Eureka-Server
 server:
@@ -10,15 +16,13 @@ eureka:
     hostname: peer1                # 指定当profile=peer1时，主机名
   client:
     serviceUrl:
-      defaultZone: http://peer2:7002/eureka/   # 将自己注册到peer2这个Eureka上面去
+      defaultZone: http://peer2:7001/eureka/   # 将自己注册到peer2这个Eureka上面去
 
 ---
 spring:
-  profiles: peer2
+  profiles: test-23
   application:
     name: Eureka-Server
-server:
-  port: 7002
 eureka:
   instance:
     hostname: peer2
