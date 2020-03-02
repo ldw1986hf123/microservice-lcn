@@ -36,9 +36,9 @@ public class BannerConfigController {
 
 
     @RequestMapping("/dept/discovery")
-    public void discoveryService() {
+    public List discoveryService() {
         List list = discoveryClient.getServices();
-        System.out.println("service list " + list);
+        System.out.println("service leeeeeeeeeeeeeist " + list);
 
         List<ServiceInstance> listServiceInstance = discoveryClient.getInstances("MICROSERVICE-DEPT");
         for (ServiceInstance serviceInstance : listServiceInstance) {
@@ -46,5 +46,6 @@ public class BannerConfigController {
                     + "\t getHost: " + serviceInstance.getHost()
                     + "\t  getPort:" + serviceInstance.getPort());
         }
+        return list;
     }
 }

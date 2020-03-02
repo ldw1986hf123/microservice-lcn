@@ -35,9 +35,9 @@ public class DeptController {
 
 
     @RequestMapping("/dept/discovery")
-    public void discoveryService() {
+    public List discoveryService() {
         List list = discoveryClient.getServices();
-        System.out.println("service list " + list);
+        System.out.println("dgdfgdgg list " + list);
 
         List<ServiceInstance> listServiceInstance = discoveryClient
                 .getInstances("MICROSERVICE-DEPT");
@@ -46,6 +46,7 @@ public class DeptController {
                     + "\t getHost: " + serviceInstance.getHost()
                     + "\t  getPort:" + serviceInstance.getPort());
         }
+        return list;
     }
 
 }
