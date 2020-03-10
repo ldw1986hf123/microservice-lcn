@@ -1,6 +1,6 @@
 #服务启动端口的配置
 server:
-  port: 9527
+  port: 9528
 
 # eureka 的相关配置
 # 如果不需要 结合eureka 使用，可以不要这一段配置
@@ -9,13 +9,22 @@ eureka:
     fetch-registry: true
     register-with-eureka: true     # 是否注册到eureka
     service-url:
-      defaultZone: http://peer1:7001/eureka/,http://peer2:7001/eureka/
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
   instance:
     prefer-ip-address: true
     hostname: microservice-gateway
-
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
 
 spring:
+  #redis
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    open: true
+    key-prefix: coral:gateway
+    expire: 30
   cloud:
     #   gateway相关配置
     gateway:
@@ -52,3 +61,11 @@ spring:
 
   application:
     name: microservice-gateway
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"      #配置说明：management.endpoints.web.exposure.include 暴露所有的gateway端点
+  endpoint:
+    health:
+      show-details: ALWAYS

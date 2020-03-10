@@ -1,17 +1,13 @@
 package com.microservice.gateway.controller;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.microservice.gateway.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.List;
 
@@ -28,6 +24,11 @@ public class AuthController {
 
     private @Autowired
     DiscoveryClient discoveryClient;
+
+
+    @Autowired
+    private
+    RedisUtil redisUtil;
 
     /**
      * 登陆认证接口
@@ -55,5 +56,13 @@ public class AuthController {
         }
         return list;
     }
+
+
+    @RequestMapping("redisTest")
+    public void redisTest() {
+        redisUtil.set("aa", "aa ");
+        System.out.println(redisUtil.get("aa"));
+    }
+
 
 }
