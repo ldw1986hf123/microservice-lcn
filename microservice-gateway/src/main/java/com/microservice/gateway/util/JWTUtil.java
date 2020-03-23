@@ -3,20 +3,22 @@ package com.microservice.gateway.util;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 
 import java.util.Date;
 
 public class JWTUtil {
 
     public static final String SECRET_KEY = "123456"; //秘钥
-    public static final long TOKEN_EXPIRE_TIME = 5 * 60 * 1000; //token过期时间
+    public static final long TOKEN_EXPIRE_TIME = 1 * 60 * 1000; //token过期时间
     public static final long REFRESH_TOKEN_EXPIRE_TIME = 10 * 60 * 1000; //refreshToken过期时间
     private static final String ISSUER = "issuer"; //签发人
 
     /**
      * 生成签名
      */
-    public static String generateToken(String username){
+    public static String generateToken(String username) {
         Date now = new Date();
         Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY); //算法
 
@@ -32,7 +34,7 @@ public class JWTUtil {
     /**
      * 验证token
      */
-    public static boolean verify(String token){
+    public static boolean verify(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY); //算法
             JWTVerifier verifier = JWT.require(algorithm)
@@ -40,7 +42,15 @@ public class JWTUtil {
                     .build();
             verifier.verify(token);
             return true;
-        } catch (Exception ex){
+        } catch (JWTDecodeException jwtDecodeException) {
+            System.out.println("token无效");
+            jwtDecodeException.printStackTrace();
+        }
+        catch (TokenExpiredException tokenExpiredException){
+            System.out.println("token超时");
+            tokenExpiredException.printStackTrace();
+        }
+        catch (Exception ex) {
             ex.printStackTrace();
         }
         return false;
@@ -49,10 +59,10 @@ public class JWTUtil {
     /**
      * 从token获取username
      */
-    public static String getUsername(String token){
-        try{
+    public static String getUsername(String token) {
+        try {
             return JWT.decode(token).getClaim("username").asString();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         return "";
