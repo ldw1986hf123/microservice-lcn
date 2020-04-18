@@ -1,7 +1,7 @@
 package com.microservice.gateway.controller;
 
 
-import com.microservice.gateway.util.RedisUtil;
+import com.microservice.gateway.config.AuthSkipUrlsProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
@@ -25,10 +25,11 @@ public class AuthController {
     private @Autowired
     DiscoveryClient discoveryClient;
 
-
     @Autowired
-    private
-    RedisUtil redisUtil;
+    AuthSkipUrlsProperties authSkipUrlsProperties;
+
+
+
 
     /**
      * 登陆认证接口
@@ -58,11 +59,20 @@ public class AuthController {
     }
 
 
+/*
     @RequestMapping("redisTest")
     public void redisTest() {
         redisUtil.set("aa", "aa ");
         System.out.println(redisUtil.get("aa"));
     }
+*/
 
+
+    @RequestMapping("getApiUrls")
+    public void getApiUrls() {
+        authSkipUrlsProperties.getApiUrls().forEach(item -> {
+            System.out.println(item);
+        });
+    }
 
 }

@@ -17,12 +17,12 @@ import reactor.core.publisher.Mono;
 public class TokenFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        String token = exchange.getRequest().getQueryParams().getFirst("token");
-        if (StringUtils.isEmpty(token)) {
-            log.info("token 为空，请求非法");
-            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-            return exchange.getResponse().setComplete();
-        }
+//        String token = exchange.getRequest().getQueryParams().getFirst("token");
+//        if (StringUtils.isEmpty(token)) {
+//            log.info("token 为空，请求非法");
+//            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+//            return exchange.getResponse().setComplete();
+//        }
         return chain.filter(exchange);
     }
 

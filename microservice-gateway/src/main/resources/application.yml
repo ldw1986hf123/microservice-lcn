@@ -1,13 +1,13 @@
 #服务启动端口的配置
 server:
-  port: 9528
+  port: 9527
 
 # eureka 的相关配置
 # 如果不需要 结合eureka 使用，可以不要这一段配置
 eureka:
   client:
-    fetch-registry: true
-    register-with-eureka: true     # 是否注册到eureka
+    fetch-registry: false
+    register-with-eureka: false     # 是否注册到eureka
     service-url:
       defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
   instance:
@@ -17,14 +17,17 @@ eureka:
     health-check-url-path: /actuator/health
 
 spring:
-  #redis
-  redis:
-    database: 0
-    host: 127.0.0.1
-    port: 6379
-    open: true
-    key-prefix: coral:gateway
-    expire: 30
+  boot:
+    admin:
+      client:
+        url: http://localhost:8788
+#  redis:
+#    database: 0
+#    host: 127.0.0.1
+#    port: 6379
+#    open: true
+#    key-prefix: coral:gateway
+#    expire: 30
   cloud:
     #   gateway相关配置
     gateway:
@@ -67,5 +70,27 @@ management:
       exposure:
         include: "*"      #配置说明：management.endpoints.web.exposure.include 暴露所有的gateway端点
   endpoint:
+    shutdown:
+      enabled: true
     health:
       show-details: ALWAYS
+
+#safe path
+auth-skip:
+  dataworks-servers:
+    - APP-HABO-SERVICE
+    - METADATA-DATASOURCE-SERVICE
+    - METADATA-DATA-LINEAGE-SERVICE
+    - METADATA-QUOTA-DICT-SERVICE
+    - METADATA-TABLE-DICT-SERVICE
+    - APP-LUBAN-DASHBOARD-SERVICE
+    - BASE-SQL-SUBMISSION-SERVICE
+    - APP-LUBAN-BACKEND-SERVICE
+  api-urls:
+    #habo
+    - /task/workspace
+    - /task/callback
+    - /task/exec
+    - /task/sch/config
+    - /user/group
+    - /health

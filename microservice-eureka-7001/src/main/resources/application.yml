@@ -1,31 +1,19 @@
 server:
   port: 7001
-
-spring:
-  profiles:
-    active: ${eureka_env_name}
----
-spring:
-  profiles: test-21           # 指定profile=peer1
-  application:
-    name: Eureka-Server
-server:
-  port: 7001  # 注册服务的端口号
 eureka:
   instance:
-    hostname: peer1                # 指定当profile=peer1时，主机名
+    hostname: eureka7001.com
+  server:
+    enable-self-preservation: false #（设为false，关闭自我保护主要）
+    eviction-interval-timer-in-ms: 10000
   client:
-    serviceUrl:
-      defaultZone: http://peer2:7001/eureka/   # 将自己注册到peer2这个Eureka上面去
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      #      defaultZone: http://eureka7003.com:7003/eureka/
+      defaultZone: http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
 
----
+
 spring:
-  profiles: test-23
   application:
-    name: Eureka-Server
-eureka:
-  instance:
-    hostname: peer2
-  client:
-    serviceUrl:
-      defaultZone: http://peer1:7001/eureka/ # 服务注册地址，将自己注册到peer2上去
+    name: microservice-eureka

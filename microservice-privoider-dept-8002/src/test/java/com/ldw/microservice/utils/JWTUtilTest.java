@@ -1,3 +1,4 @@
+/*
 package com.ldw.microservice.utils;
 
 import com.microservice.gateway.util.JWTUtil;
@@ -19,4 +20,4 @@ public  class JWTUtilTest {
     public  void getUsername() {
         System.out.println( JWTUtil.getUsername("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJpc3N1ZXIiLCJleHAiOjE1ODQ5ODYyNjQsImlhdCI6MTU4NDk4NTk2NCwidXNlcm5hbWUiOiJsZHcifQ.-ukem6NLxvMNdgRA0caf8EwfHDq3ZE0svDE_SE0jnt4"));
     }
-}
+}*/

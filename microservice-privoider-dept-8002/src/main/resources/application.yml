@@ -9,13 +9,17 @@ spring:
     name: microservice-dept
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/cloudDB02?serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/huobi_pool?serverTimezone=UTC
     username: root
     password: aaaaa888
   devtools:
     restart:
       enabled: true    #设置开启热部署
       additional-paths: src/main/java #重启目录
+  boot:
+    admin:
+      client:
+        url: http://localhost:8788
 eureka:
   client:
     service-url:
@@ -29,3 +33,8 @@ info:
   build.artifactId: $project.artifactId$
   build.version: $project.version$
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include=*:

@@ -43,16 +43,24 @@
             <scope>compile</scope>
         </dependency>
 
+        <!-- 添加监控支持 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.62</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
@@ -71,10 +79,7 @@
             <artifactId>junit</artifactId>
             <scope>compile</scope>
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-test</artifactId>-->
-        <!--        </dependency>-->
+
 
         <dependency>
             <groupId>com.github.pagehelper</groupId>
@@ -107,9 +112,23 @@
             <groupId>com.sun.mail</groupId>
             <artifactId>javax.mail</artifactId>
         </dependency>
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>microservice-gateway</artifactId>
+            <scope>test</scope>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>cn.pomit</groupId>-->
+<!--            <artifactId>spring-boot-monitor</artifactId>-->
+<!--            <version>0.0.1</version>-->
+<!--        </dependency>-->
 
     </dependencies>
-
     <build>
         <finalName>dept8002</finalName>
         <plugins>
