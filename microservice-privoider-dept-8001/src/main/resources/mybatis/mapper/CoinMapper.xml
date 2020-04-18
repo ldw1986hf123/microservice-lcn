@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ldw.microservice.dao.CoinDao">
+    <select id="findById" resultType="Coin" parameterType="Integer">
+		select
+		id,name,url from t_coin
+		where id=#{id}
+	</select>
+
+
+    <select id="findAll" resultType="Coin">
+		select id,name,url from t_coin
+		from t_coin
+	</select>
+
+
+    <insert id="Insert" parameterType="Coin">
+		insert into t_coin (name,url  )
+		values(${name},#{url})
+	</insert>
+</mapper>
