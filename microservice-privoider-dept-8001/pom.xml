@@ -14,7 +14,12 @@
             <artifactId>microservice-api</artifactId>
             <version>${project.version}</version>
         </dependency>
-       
+        <!--要加上这个springboot-web的支持，不然会一起动就down调-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
@@ -32,16 +37,7 @@
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.codingapi.txlcn</groupId>
-            <artifactId>txlcn-tc</artifactId>
-            <version>5.0.2.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>com.codingapi.txlcn</groupId>
-            <artifactId>txlcn-txmsg-netty</artifactId>
-            <version>5.0.2.RELEASE</version>
-        </dependency>
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -50,40 +46,5 @@
         </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>com.ldw.microservice.DeptProvider8001_App</mainClass>
-                    <layout>JAR</layout>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-         <!--   <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.10</version>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/classes/lib</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>-->
-        </plugins>
-    </build>
+
 </project>
