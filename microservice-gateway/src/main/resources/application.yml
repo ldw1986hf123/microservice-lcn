@@ -6,10 +6,10 @@ server:
 # 如果不需要 结合eureka 使用，可以不要这一段配置
 eureka:
   client:
-    fetch-registry: false
-    register-with-eureka: false     # 是否注册到eureka
+    fetch-registry: true
+    register-with-eureka: true  # 是否注册到eureka
     service-url:
-      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+      defaultZone: http://127.0.0.1:7001/eureka/,http://127.0.0.1:7002/eureka/,http://127.0.0.1:7003/eureka/
   instance:
     prefer-ip-address: true
     hostname: microservice-gateway
@@ -21,13 +21,13 @@ spring:
     admin:
       client:
         url: http://localhost:8788
-#  redis:
-#    database: 0
-#    host: 127.0.0.1
-#    port: 6379
-#    open: true
-#    key-prefix: coral:gateway
-#    expire: 30
+    redis:
+      database: 0
+      host: 127.0.0.1
+      port: 6379
+      open: true
+      key-prefix: coral:gateway
+      expire: 30
   cloud:
     #   gateway相关配置
     gateway:
@@ -48,12 +48,12 @@ spring:
           filters:
             - StripPrefix=1
 
-        - id: eureka-manage
-          uri: lb://microservice-dept
-          predicates:
-            - Path=/eureka-manage/**
-          filters:
-            - StripPrefix=1
+#        - id: eureka-manage
+#          uri: lb://microservice-dept
+#          predicates:
+#            - Path=/eureka-manage/**
+#          filters:
+#            - StripPrefix=1
 
         - id: gate-way-service
           uri: lb://microservice-gateway
@@ -62,6 +62,17 @@ spring:
           filters:
             - StripPrefix=1
 
+        - id: limit_route
+          uri: lb://microservice-dept
+          predicates:
+            - Path=/xianliu/**
+          filters:
+            - StripPrefix=1
+            - name: RequestRateLimiter
+              args:
+                key-resolver: '#{@hostAddrKeyResolver}'
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 3
   application:
     name: microservice-gateway
 management:
