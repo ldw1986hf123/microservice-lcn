@@ -48,12 +48,17 @@ spring:
           filters:
             - StripPrefix=1
 
-#        - id: eureka-manage
-#          uri: lb://microservice-dept
-#          predicates:
-#            - Path=/eureka-manage/**
-#          filters:
-#            - StripPrefix=1
+        - id: eureka-manage
+          uri: lb://microservice-dept
+          predicates:
+            - Path=/eureka-manage/**
+          filters:
+            - StripPrefix=1
+            - name: RequestRateLimiter
+              args:
+                key-resolver: '#{@apiKeyResolver}'      # 根据url
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 3
 
         - id: gate-way-service
           uri: lb://microservice-gateway
@@ -61,6 +66,21 @@ spring:
             - Path=/gate-service/**
           filters:
             - StripPrefix=1
+
+
+        - id: limit_route_uri
+          uri: lb://microservice-dept
+          predicates:
+            - Path=/uri_limit/**
+          filters:
+            - StripPrefix=1
+            - name: RequestRateLimiter
+              args:
+                key-resolver: '#{@uriKeyResolver}'      # 根据url
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 3
+
+
 
         - id: limit_route
           uri: lb://microservice-dept
@@ -70,9 +90,9 @@ spring:
             - StripPrefix=1
             - name: RequestRateLimiter
               args:
-                key-resolver: '#{@hostAddrKeyResolver}'
-                redis-rate-limiter.replenishRate: 1
-                redis-rate-limiter.burstCapacity: 3
+                key-resolver: '#{@hostAddrKeyResolver}'      # 根据IP限流
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 30
   application:
     name: microservice-gateway
 management:
