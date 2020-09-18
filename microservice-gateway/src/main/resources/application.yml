@@ -7,7 +7,7 @@ server:
 eureka:
   client:
     fetch-registry: true
-    register-with-eureka: true  # 是否注册到eureka
+    register-with-eureka: true  # 是否注册到
     service-url:
       defaultZone: http://127.0.0.1:7001/eureka/,http://127.0.0.1:7002/eureka/,http://127.0.0.1:7003/eureka/
   instance:
@@ -79,8 +79,6 @@ spring:
                 key-resolver: '#{@uriKeyResolver}'      # 根据url
                 redis-rate-limiter.replenishRate: 1
                 redis-rate-limiter.burstCapacity: 3
-
-
 
         - id: limit_route
           uri: lb://microservice-dept

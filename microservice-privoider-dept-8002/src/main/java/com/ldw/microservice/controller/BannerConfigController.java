@@ -7,6 +7,7 @@ import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -31,7 +32,10 @@ public class BannerConfigController {
     @SuppressWarnings("rawtypes")
     @RequestMapping(value = "dept/list", method = RequestMethod.GET)
     public List list() {
-        return deptSercice.findAll();
+
+        List list = Arrays.asList("1 ", "2", "3");
+        return list;
+
     }
 
 

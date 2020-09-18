@@ -1,0 +1,12 @@
+/.idea
+#maven ignore
+target/
+build/
+
+
+# temp file
+*.log
+*.cache
+*.diff
+*.patch
+*.tmp
