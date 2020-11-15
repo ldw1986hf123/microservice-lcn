@@ -22,11 +22,11 @@ public class User {
     @Id
     private Integer userId;
 
-    @Field(name="user_name",type = FieldType.Keyword)
+    @Field( type = FieldType.Keyword)
     private String name;
 
 
-    @Field(name="user_birthday",type=FieldType.Date,format = DateFormat.date_hour_minute_second )
+    @Field( type=FieldType.Date,format = DateFormat.date_hour_minute_second )
     private String birthDay;
 
     @Transient

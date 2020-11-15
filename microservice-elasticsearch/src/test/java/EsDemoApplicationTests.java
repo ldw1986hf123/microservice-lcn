@@ -1,16 +1,12 @@
-import com.microservice.es.EsDemoApplication;
-import com.microservice.es.entity.Item;
 import com.microservice.es.repository.ItemRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
-
+import  com.microservice.es.EsDemoApplication;
 import java.util.ArrayList;
-import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EsDemoApplication.class)
