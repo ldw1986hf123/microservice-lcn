@@ -20,6 +20,11 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.Aggregations;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms;
+import org.elasticsearch.search.aggregations.metrics.Avg;
+import org.elasticsearch.search.aggregations.metrics.SumAggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -176,5 +181,39 @@ public class ProductTest {
         client.indices().create(request, RequestOptions.DEFAULT);
     }
 
+    @Test
+    public void sum() throws IOException {
+        // 创建SearchRequest对象, 设置查询索引名=order
+        SearchRequest searchRequest = new SearchRequest(index);
+        // 通过SearchSourceBuilder构建搜索参数
+        SearchSourceBuilder builder = new SearchSourceBuilder();
+        // 创建terms桶聚合，聚合名字=by_shop, 字段=shop_id，根据shop_id分组
+        SumAggregationBuilder aggregationBuilder = AggregationBuilders.sum("sum_price").field("price");
+        // 嵌套聚合
+        // 设置Avg指标聚合，聚合名字=avg_price, 字段=price，计算平均价格
+//        aggregationBuilder.subAggregation(AggregationBuilders.sum("avg_price").field("price"));
+        // 设置聚合查询
+        builder.aggregation(aggregationBuilder);
+        // 设置搜索条件
+        searchRequest.source(builder);
+        // 如果只想返回聚合统计结果，不想返回查询结果可以将分页大小设置为0
+        builder.size(0);
+        // 执行ES请求
+        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+        // 处理聚合查询结果
+        Aggregations aggregations = searchResponse.getAggregations();
+        // 根据by_shop名字查询terms聚合结果
+        Terms byShopAggregation = aggregations.get("sum_price");
+        // 遍历terms聚合结果
+        for (Terms.Bucket bucket : byShopAggregation.getBuckets()) {
+            // 因为是根据shop_id分组，因此可以直接将桶的key转换成int类型
+            int shopId = bucket.getKeyAsNumber().intValue();
+            // 根据avg_price聚合名字，获取嵌套聚合结果
+            Avg avg = bucket.getAggregations().get("sum_price");
+            // 获取平均价格
+            double avgPrice = avg.getValue();
+            System.out.println(avgPrice);
+        }
 
+    }
 }
