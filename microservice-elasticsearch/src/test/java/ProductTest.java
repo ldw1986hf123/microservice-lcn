@@ -15,9 +15,7 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.common.xcontent.XContentType;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.RangeQueryBuilder;
+import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
@@ -214,6 +212,48 @@ public class ProductTest {
             double avgPrice = avg.getValue();
             System.out.println(avgPrice);
         }
-
     }
+
+
+    /**
+     * match会对中文进行分词，只要满足其中一个就可以查出来
+     */
+    @Test
+    public void matchTest(){
+        SearchSourceBuilder sourceBuilder;
+        sourceBuilder = new SearchSourceBuilder();
+        sourceBuilder.from(0);
+        sourceBuilder.size(200);
+//        sourceBuilder.fetchSource(new String[]{"title"}, new String[]{});
+        MatchQueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("tableName", "大");
+
+        TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery("userId", "112");
+        TermQueryBuilder termQueryBuilder2 = QueryBuilders.termQuery("tableId", 111111);
+
+//
+//        RangeQueryBuilder rangeQueryBuilder = QueryBuilders.rangeQuery("publishTime");
+//        rangeQueryBuilder.gte("2018-01-26T08:00:00Z");
+//        rangeQueryBuilder.lte("2018-01-26T20:00:00Z");
+        BoolQueryBuilder boolBuilder = QueryBuilders.boolQuery();
+        boolBuilder.must(matchQueryBuilder);
+        boolBuilder.must(termQueryBuilder);
+//        boolBuilder.must(termQueryBuilder2);
+//        boolBuilder.must(rangeQueryBuilder);
+        sourceBuilder.query(boolBuilder);
+        SearchRequest searchRequest = new SearchRequest(index);
+        searchRequest.source(sourceBuilder);
+        try {
+            SearchResponse response = client.search(searchRequest, RequestOptions.DEFAULT);
+//            System.out.println(response);
+            SearchHits hits = response.getHits();
+            System.out.println("总共有" + hits.getHits().length + "条记录");
+            for (SearchHit hit : hits) {
+                System.out.println(hit.getSourceAsString());
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
 }
