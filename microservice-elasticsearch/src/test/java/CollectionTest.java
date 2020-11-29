@@ -1,7 +1,4 @@
 import com.alibaba.fastjson.JSON;
-import com.anqi.es.DemoEsApplication;
-import com.anqi.es.entity.UserCollection;
-import com.anqi.es.highclient.RestHighLevelClientService;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;

@@ -19,7 +19,7 @@ public interface UserRepository extends ElasticsearchRepository<User, Integer> {
      * @param city
      * @return
      */
-    List<User> findUsersByNameLikeAndLocationCityEqualsOrderByUserId(
+    List<User> EsCommonDao(
             String userName,
             String city
     );
