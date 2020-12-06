@@ -1,11 +1,12 @@
-package com.web.test;
+package com.ldw.metadata;
+
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class WebTestApplication {
+public class MetadataApplication {
     public static void main(String[] args) {
-        SpringApplication.run(WebTestApplication.class, args);
+        SpringApplication.run(MetadataApplication.class, args);
     }
 }
