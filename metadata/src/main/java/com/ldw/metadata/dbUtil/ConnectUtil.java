@@ -1,9 +1,12 @@
 package com.ldw.metadata.dbUtil;
 
 
-import java.sql.*;
-import javax.sql.*;
+import com.ldw.metadata.vo.JdbcDatasourceVO;
+import lombok.extern.slf4j.Slf4j;
 
+import java.sql.*;
+
+@Slf4j
 public class ConnectUtil {
     private static final String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     private static final String URL = "jdbc:sqlserver://localhost:1433;databasename=";
@@ -25,5 +28,18 @@ public class ConnectUtil {
         return conn;
     }
 
-
+    public static Connection getConnection(JdbcDatasourceVO jdbcDatasourceVO) {
+        Connection conn = null;
+        try {
+            Class.forName(jdbcDatasourceVO.getDriverClass());
+            String totalUrl=jdbcDatasourceVO.getUrl();
+            log.info("total Url {}",totalUrl);
+            conn = DriverManager.getConnection(totalUrl,jdbcDatasourceVO.getUsername(),jdbcDatasourceVO.getPassword());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return conn;
+    }
 }

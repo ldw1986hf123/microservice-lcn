@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class TableMetadataVO extends MetaDataVO {
+public class TableMetadataVO extends MetadataVO {
     private String tableId;
     private String tableName;
     private String tableComment;

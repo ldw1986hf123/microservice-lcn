@@ -2,12 +2,10 @@ package com.ldw.metadata.dbUtil;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.ldw.metadata.vo.Animal;
-import com.ldw.metadata.vo.MetaDataVO;
+import com.ldw.metadata.vo.MetadataVO;
 import lombok.extern.slf4j.Slf4j;
 
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.*;
 
 @Slf4j
@@ -38,7 +36,7 @@ public class DBUtils {
         return list;
     }
 
-    public static <T extends MetaDataVO> List<T> convertList(ResultSet rs, Class<T> clazz) throws SQLException, IllegalAccessException, InstantiationException {
+    public static <T extends MetadataVO> List<T> convertList(ResultSet rs, Class<T> clazz) throws SQLException, IllegalAccessException, InstantiationException {
         List<T> list = new ArrayList();
         ResultSetMetaData md = rs.getMetaData();//获取键名
         int columnCount = md.getColumnCount();//获取行的数量
@@ -78,7 +76,34 @@ public class DBUtils {
     public static <T> void show(T t) {
 
     }
+    public static void closeResources(PreparedStatement stm, ResultSet resultSet) {
+        if (null != stm) {
+            try {
+                stm.close();
+            } catch (SQLException e) {
+                log.error("关闭 stm 出错", e);
+            }
+        }
 
+
+        if (null != resultSet) {
+            try {
+                resultSet.close();
+            } catch (SQLException e) {
+                log.error("关闭 resultSet 出错", e);
+            }
+        }
+    }
+
+    public static void closeConnection(Connection connection) {
+        if (null != connection) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                log.error("关闭 connection 出错", e);
+            }
+        }
+    }
 
     public <T> T badCast(T t, Object o) {
         return (T) o; // unchecked warning
