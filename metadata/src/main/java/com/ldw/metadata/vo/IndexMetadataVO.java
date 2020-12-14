@@ -1,5 +1,7 @@
 package com.ldw.metadata.vo;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.ToString;
 
@@ -19,6 +21,11 @@ public class IndexMetadataVO  extends MetadataVO implements Serializable {
     private String tableName;
     private String  columnName;
     private String createdDate;
+
+    @JsonProperty("indexType")
     private String  type;
+
+
+    @JsonProperty("indexComment")
     private String comment;
 }
