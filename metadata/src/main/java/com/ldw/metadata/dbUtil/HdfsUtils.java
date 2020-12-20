@@ -2,19 +2,14 @@ package com.ldw.metadata.dbUtil;
 
 import com.ldw.metadata.vo.JdbcDatasourceVO;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.CommonConfigurationKeys;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.security.UserGroupInformation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Map;
-import java.util.Objects;
 
 @Slf4j
 public class HdfsUtils {
@@ -71,7 +66,6 @@ public class HdfsUtils {
         /**
          * 获取 hdfs 客户端，开启kerberos的
          *
-         * @param hdfsAddress hdfs配置
          * @return hdfs 客户端
          * @throws Exception
          */
@@ -96,7 +90,7 @@ public class HdfsUtils {
                 conf.set("fs.file.impl", org.apache.hadoop.fs.LocalFileSystem.class.getName());
             }*/
 
-            if ( 1 == jdbcDatasourceVO.getAuthenticationType()) {
+            if ( null!=jdbcDatasourceVO.getAuthenticationType()&&1==jdbcDatasourceVO.getAuthenticationType() ) {
                 conf.set("fs.hdfs.impl", "org.apache.hadoop.hdfs.DistributedFileSystem");
                 conf.set("dfs.client.block.write.replace-datanode-on-failure.policy", "NEVER");
                 System.setProperty("java.security.krb5.conf", jdbcDatasourceVO.getKrb5ConfPath());
@@ -118,9 +112,10 @@ public class HdfsUtils {
                 UserGroupInformation.reset();
                 System.clearProperty("java.security.krb5.conf");
             }
-
+            String url=jdbcDatasourceVO.getUrl();
+            String userName=jdbcDatasourceVO.getUsername();
             try {
-                fileSystem = FileSystem.get(new URI(hdfsAddress.getDefaultFS()), conf, hdfsAddress.getUsername());
+                fileSystem = FileSystem.get(new URI("hdfs://192.168.171.134:10000/"), conf,userName);
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             } catch (InterruptedException e) {

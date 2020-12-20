@@ -45,7 +45,7 @@ public class HiveCollector implements AutoCollectorMetadata {
           queryRunner = new QueryRunner(true);
           Connection connection = dbConfig.getConnection(jdbcDatasourceVO);
           tableMetadataVOList   = collectTableMetadata(connection, dbName);
-          fileSystem = HdfsUtils.getFileSystemByKerberos(hdfsAddress);
+          fileSystem = HdfsUtils.getFileSystemByKerberos(jdbcDatasourceVO);
 
           for (TableMetadataVO tableMetadataVO : tableMetadataVOList) {
               String tableName = tableMetadataVO.getTableName();
