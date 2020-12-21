@@ -1,11 +1,13 @@
 package com.ldw.metadata.vo;
 
 import lombok.Data;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
 @Data
+@ToString
 @Slf4j
 public class TablesDesc {
     private String col_name;
@@ -19,9 +21,12 @@ public class TablesDesc {
                 log.info("查询到分区信息：",tablesDesc.toString());
                 return true;
             }
+            else
+            {
+                log.info("没有分区数据。。。。" ,tablesDesc.toString());
+            }
         }
 
-        log.info("没有分区数据。。。。" );
         return false;
     }
     public static String getLocation(List<TablesDesc> tablesDescList) {
