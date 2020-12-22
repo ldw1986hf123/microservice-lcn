@@ -50,7 +50,7 @@ public class DBUtils {
         while (rs.next()) {
             T vo = clazz.newInstance();
             for (int i = 1; i <= columnCount; i++) {
-                log.info(md.getColumnName(i), rs.getObject(i));//获取键名及值
+//                log.info(md.getColumnName(i), rs.getObject(i));//获取键名及值
                 String columnLabel=md.getColumnLabel(i);
                 Object filedValue=rs.getObject(i);
                 BeanUtil.setFieldValue(vo,columnLabel,filedValue);

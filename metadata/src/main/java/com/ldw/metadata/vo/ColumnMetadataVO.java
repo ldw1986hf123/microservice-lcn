@@ -9,4 +9,14 @@ public class ColumnMetadataVO extends MetadataVO {
     private String tableName;
     private Boolean isNullAble;
     private String comment;
+
+    /**
+     * 约束  字符串
+     */
+    private String constraintsStr;
+
+    /**
+     * 是否外键
+     */
+    private Boolean isForeignKey;
 }

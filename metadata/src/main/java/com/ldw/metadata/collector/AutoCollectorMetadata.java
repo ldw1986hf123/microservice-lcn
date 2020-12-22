@@ -11,7 +11,7 @@ package com.ldw.metadata.collector;
  */
 
 
-import com.ldw.metadata.vo.JdbcDatasourceVO;
+import com.ldw.metadata.vo.DatasourceVO;
 import com.ldw.metadata.vo.TableMetadataVO;
 
 import java.sql.SQLException;
@@ -27,5 +27,5 @@ public interface AutoCollectorMetadata {
 	 * @return 表集合
 	 * @throws SQLException 
 	 */
-	List<TableMetadataVO> collect(JdbcDatasourceVO datasourceVO) throws Exception;
+	List<TableMetadataVO> collect(DatasourceVO datasourceVO) throws Exception;
 }
