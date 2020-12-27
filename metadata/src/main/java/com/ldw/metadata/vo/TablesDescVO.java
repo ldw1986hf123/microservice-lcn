@@ -9,14 +9,14 @@ import java.util.List;
 @Data
 @ToString
 @Slf4j
-public class TablesDesc {
+public class TablesDescVO {
     private String col_name;
     private String data_type;
     private String comment;
 
 
-    public static boolean isExsitPartition(List<TablesDesc> tablesDescList) {
-        for (TablesDesc tablesDesc : tablesDescList) {
+    public static boolean isExsitPartition(List<TablesDescVO> tablesDescList) {
+        for (TablesDescVO tablesDesc : tablesDescList) {
             if ("# Partition Information".equals(tablesDesc.getCol_name())) {
                 log.info("查询到分区信息：",tablesDesc.toString());
                 return true;
@@ -29,12 +29,12 @@ public class TablesDesc {
 
         return false;
     }
-    public static String getLocation(List<TablesDesc> tablesDescList) {
+    public static String getLocation(List<TablesDescVO> tablesDescList) {
         if (tablesDescList == null) {
             return null;
         }
 
-        for (TablesDesc tablesDesc : tablesDescList) {
+        for (TablesDescVO tablesDesc : tablesDescList) {
             if ("Location:           ".equals(tablesDesc.getCol_name())) {
                 return tablesDesc.getData_type();
             }

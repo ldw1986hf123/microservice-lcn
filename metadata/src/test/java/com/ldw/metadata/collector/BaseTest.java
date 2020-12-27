@@ -30,5 +30,9 @@ public abstract class BaseTest {
        String jsonStr=JSON.toJSONString(list);
        System.out.println(jsonStr);
    }
+    public void printResult(Object list){
+        String jsonStr=JSON.toJSONString(list);
+        System.out.println(jsonStr);
+    }
 
 }

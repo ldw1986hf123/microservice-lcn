@@ -31,7 +31,7 @@ public class AutoCollectorMetadataMySql implements AutoCollectorMetadata {
     //todo  用户权限有可能灭有权限查这些表
 
     private final String SELECT_ALL_TABLES = " SELECT TABLE_NAME as tableName ,TABLE_COMMENT tableComment,TABLE_SCHEMA as  databaseName ,create_time as createdTime ,update_time as updatedTime  FROM  information_schema.TABLES   where TABLE_TYPE='BASE TABLE' and TABLE_SCHEMA= ?";
-    private final String SELECT_ALL_COLUMN_NAME = "SELECT COLUMN_NAME as columnName,TABLE_NAME AS tableName, COLUMN_TYPE as columnType,  IS_NULLABLE as isNull, COLUMN_KEY as isPrimaryKey, COLUMN_COMMENT  as columnComment  FROM   information_schema.COLUMNS WHERE TABLE_NAME IN ( %s ) ";
+    private final String SELECT_ALL_COLUMN_NAME = "SELECT COLUMN_NAME as columnName,TABLE_NAME AS tableName, COLUMN_TYPE as columnType,  IS_NULLABLE as isNullAble, COLUMN_KEY as isPrimaryKey, COLUMN_COMMENT  as columnComment  FROM   information_schema.COLUMNS WHERE TABLE_NAME IN ( %s ) ";
     private final String SELECT_ALL_INDEX = "  SELECT table_name as tableName,index_name as name,column_name as columnName,index_type as type, index_comment as comment FROM information_schema.statistics  ";
     private final String SELECT_ALL_PARTITION = "  SELECT table_name tableName, partition_name name,data_length dataLength, max_data_length maxDataLength,create_time as createdTime, update_time as updatedTime  FROM information_schema.PARTITIONS ";
 
@@ -48,19 +48,13 @@ public class AutoCollectorMetadataMySql implements AutoCollectorMetadata {
      * @desc 自动收集元数据
      */
     @Override
-    public List<TableMetadataVO> collect(DatasourceVO datasourceVO) {
+    public List<TableMetadataVO> collect(JdbcDatasourceVO jdbcDatasourceVO) {
         log.info("{}--------------mysql 开始收集  ", DateUtil.now());
         List<TableMetadataVO> tableMetadataVOs = new ArrayList<>();
-        JdbcDatasourceVO jdbcDatasourceVO = null;
 
-        if (null == datasourceVO) {
-            log.error("mysql 收集器传入的数据源为空");
-            return tableMetadataVOs;
-        }
         Connection connection = null;
         try {
             //获取数据库链接
-            jdbcDatasourceVO = (JdbcDatasourceVO) datasourceVO;
             connection = dBConfig.getSimpleConnection(jdbcDatasourceVO);
             if (null == connection) {
                 return tableMetadataVOs;
@@ -128,7 +122,8 @@ public class AutoCollectorMetadataMySql implements AutoCollectorMetadata {
     /**
      * 先获取表的元数据
      */
-    private List<TableMetadataVO> getTableMetadata(Connection connection, String databaseName) {
+    @Override
+    public List<TableMetadataVO> getTableMetadata(Connection connection, String databaseName) {
         List<TableMetadataVO> tableMetadataVOs = new ArrayList<>();
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -154,7 +149,8 @@ public class AutoCollectorMetadataMySql implements AutoCollectorMetadata {
     /**
      * 获取字段的元数据
      */
-    private List<ColumnMetadataVO> getColumnMetadata(Connection connection, List tableNameList) {
+    @Override
+    public List<ColumnMetadataVO> getColumnMetadata(Connection connection, List tableNameList) {
         List<ColumnMetadataVO> columnMetadataVOS = new ArrayList<>();
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -163,9 +159,6 @@ public class AutoCollectorMetadataMySql implements AutoCollectorMetadata {
             List<String> parameters = new ArrayList<>();
             tableNameList.forEach(empNo -> parameters.add("?"));   //Use forEach to add required no. of '?'
             String commaSepParameters = String.join(",", parameters); //Use String to join '?' with ','
-
-
-
             String selectQuery =String.format(SELECT_ALL_COLUMN_NAME,commaSepParameters);
             stm = connection.prepareStatement(selectQuery);
             addParams(stm,tableNameList);
