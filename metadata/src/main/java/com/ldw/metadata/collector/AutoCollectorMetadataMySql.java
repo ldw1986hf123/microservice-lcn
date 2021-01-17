@@ -6,6 +6,7 @@ import com.ldw.metadata.dbUtil.DBUtils;
 import com.ldw.metadata.vo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.hadoop.fs.Path;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -145,6 +146,18 @@ public class AutoCollectorMetadataMySql implements AutoCollectorMetadata {
         }
         return tableMetadataVOs;
     }
+
+    @Override
+    public List<PartitionMetadataVO> collectPartition(String tableName, Path tablePath) {
+        return null;
+    }
+
+    @Override
+    public List<PartitionMetadataVO> collectPartition(Connection connection, String dbName, String tableName, JdbcDatasourceVO jdbcDatasourceVO) {
+        return null;
+    }
+
+
 
     /**
      * 获取字段的元数据

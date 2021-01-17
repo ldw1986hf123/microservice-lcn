@@ -7,9 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class AutoCollectorMetadataMySqlTest extends BaseTest {
     @Autowired
@@ -47,8 +44,6 @@ public class AutoCollectorMetadataMySqlTest extends BaseTest {
 
     @Test
     public void collect() {
-        List list = autoCollectorMetadataMySql.collect(jdbcDatasourceVO);
-        printResult(list);
     }
 
 

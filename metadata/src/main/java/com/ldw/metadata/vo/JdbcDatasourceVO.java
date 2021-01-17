@@ -1,5 +1,8 @@
 package com.ldw.metadata.vo;
 
+import lombok.Data;
+import lombok.ToString;
+
 /**
  * ClassName:JdbcDatasourceVO <br/>
  * Function: Jdbc数据源VO实现类. <br/>
@@ -11,6 +14,8 @@ package com.ldw.metadata.vo;
  * @since JDK 1.8
  * @see
  */
+@Data
+@ToString
 public class JdbcDatasourceVO extends DatasourceVO {
 	/**
 	 * serialVersionUID:(序列号).
@@ -81,149 +86,6 @@ public class JdbcDatasourceVO extends DatasourceVO {
 	 */
 	private String servicePrincipal;
 
-	@Override
-	public Long getId() {
+	private String hdfsUrl;
 
-		return this.id;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getDatabaseName() {
-		return databaseName;
-	}
-
-	public void setDatabaseName(String databaseName) {
-		this.databaseName = databaseName;
-	}
-
-	@Override
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getTenantId() {
-		return tenantId;
-	}
-
-	public void setTenantId(String tenantId) {
-		this.tenantId = tenantId;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	@Override
-	public String getCode() {
-		return this.code;
-	}
-
-	public String getDriverClass() {
-		return driverClass;
-	}
-
-	public void setDriverClass(String driverClass) {
-		this.driverClass = driverClass;
-	}
-
-	@Override
-	public Long getProjectId() {
-		return this.projectId;
-	}
-
-	public void setProjectId(Long projectId) {
-		this.projectId = projectId;
-	}
-
-	public Integer getAuthenticationType() {
-		return authenticationType;
-	}
-
-	public void setAuthenticationType(Integer authenticationType) {
-		this.authenticationType = authenticationType;
-	}
-
-	public String getKrb5ConfPath() {
-		return krb5ConfPath;
-	}
-
-	public void setKrb5ConfPath(String krb5ConfPath) {
-		this.krb5ConfPath = krb5ConfPath;
-	}
-
-	public String getKeytabPath() {
-		return keytabPath;
-	}
-
-	public void setKeytabPath(String keytabPath) {
-		this.keytabPath = keytabPath;
-	}
-
-	public String getPrincipal() {
-		return principal;
-	}
-
-	public void setPrincipal(String principal) {
-		this.principal = principal;
-	}
-
-	public String getServicePrincipal() {
-		return servicePrincipal;
-	}
-
-	public void setServicePrincipal(String servicePrincipal) {
-		this.servicePrincipal = servicePrincipal;
-	}
-
-	@Override
-	public String toString() {
-		return "JdbcDatasourceVO{" +
-				"id=" + id +
-				", code='" + code + '\'' +
-				", url='" + url + '\'' +
-				", username='" + username + '\'' +
-				", password='" + password + '\'' +
-				", databaseName='" + databaseName + '\'' +
-				", driverClass='" + driverClass + '\'' +
-				", type='" + type + '\'' +
-				", tenantId='" + tenantId + '\'' +
-				", projectId=" + projectId +
-				", authenticationType=" + authenticationType +
-				", krb5ConfPath='" + krb5ConfPath + '\'' +
-				", keytabPath='" + keytabPath + '\'' +
-				", principal='" + principal + '\'' +
-				", servicePrincipal='" + servicePrincipal + '\'' +
-				'}';
-	}
 }

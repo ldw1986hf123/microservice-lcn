@@ -58,11 +58,33 @@ public class HiveCollectorTest extends BaseTest {
         printResult(list);
     }
 
+
+     /*   #mail
+    mail.account = yiyangyu111@163.com
+    mail.password = GOZLLKNGYMQBCEQE
+    mail.smtp.host = smtp.163.com
+    mail.send.milliseconds = 10000
+    mail.content.url = http://daas-dev.deepexi.com/daas-management/index.html#/quality/query-task/sheet-details?taskId=taskIdParam
+   */
+
     @Test
     public void collectColumn() throws Exception {
-        List<String> tableNameList=new ArrayList<>();
+        List<String> tableNameList = new ArrayList<>();
         tableNameList.add("student");
         List list = hiveCollector.getColumnMetadata(connection, tableNameList);
+        printResult(list);
+    }
+
+    @Test
+    public void collectPartition() throws Exception {
+    }
+
+
+
+    @Test
+    public void collect() throws Exception {
+        jdbcDatasourceVO.setHdfsUrl("hdfs://192.168.171.134:10000");
+        List list = hiveCollector.collect(jdbcDatasourceVO);
         printResult(list);
     }
 }

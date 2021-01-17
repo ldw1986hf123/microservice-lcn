@@ -13,7 +13,9 @@ package com.ldw.metadata.collector;
 
 import com.ldw.metadata.vo.ColumnMetadataVO;
 import com.ldw.metadata.vo.JdbcDatasourceVO;
+import com.ldw.metadata.vo.PartitionMetadataVO;
 import com.ldw.metadata.vo.TableMetadataVO;
+import org.apache.hadoop.fs.Path;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -34,4 +36,8 @@ public interface AutoCollectorMetadata {
 
 	List<ColumnMetadataVO> getColumnMetadata(Connection connection, List<String> tableNameList) ;
 	List<TableMetadataVO> getTableMetadata(Connection connection, String dbName);
+	List<PartitionMetadataVO> collectPartition(String tableName, Path tablePath);
+
+
+	List<PartitionMetadataVO> collectPartition(Connection connection, String dbName, String tableName,JdbcDatasourceVO jdbcDatasourceVO) ;
 }

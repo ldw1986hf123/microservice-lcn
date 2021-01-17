@@ -1,11 +1,8 @@
 package com.ldw.metadata.dbUtil;
 
-import com.ldw.metadata.vo.JdbcDatasourceVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.CommonConfigurationKeys;
 import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.security.UserGroupInformation;
 
 import java.io.IOException;
 import java.net.URI;
@@ -69,11 +66,11 @@ public class HdfsUtils {
          * @return hdfs 客户端
          * @throws Exception
          */
-        public static FileSystem getFileSystemByKerberos(JdbcDatasourceVO jdbcDatasourceVO) {
+        public static FileSystem getFileSystemByKerberos(String hdfsUrl,String userName) {
             FileSystem fileSystem = null;
             Configuration conf = new Configuration();
-            // HA
-         /*   if (StringUtils.isNotBlank(hdfsAddress.getNameservices())) {
+            /*           // HA
+         *//*   if (StringUtils.isNotBlank(hdfsAddress.getNameservices())) {
                 // hadoop的HA
                 conf.set("fs.defaultFS", hdfsAddress.getDefaultFS());
                 conf.set("dfs.nameservices", hdfsAddress.getNameservices());
@@ -88,7 +85,7 @@ public class HdfsUtils {
                 conf.set("fs.hdfs.impl", org.apache.hadoop.hdfs.DistributedFileSystem.class.getName());
                 // 这个解决本地file问题
                 conf.set("fs.file.impl", org.apache.hadoop.fs.LocalFileSystem.class.getName());
-            }*/
+            }*//*
 
             if ( null!=jdbcDatasourceVO.getAuthenticationType()&&1==jdbcDatasourceVO.getAuthenticationType() ) {
                 conf.set("fs.hdfs.impl", "org.apache.hadoop.hdfs.DistributedFileSystem");
@@ -113,9 +110,9 @@ public class HdfsUtils {
                 System.clearProperty("java.security.krb5.conf");
             }
             String url=jdbcDatasourceVO.getUrl();
-            String userName=jdbcDatasourceVO.getUsername();
+            String userName=jdbcDatasourceVO.getUsername();*/
             try {
-                fileSystem = FileSystem.get(new URI("hdfs://192.168.171.134:10000/"), conf,userName);
+                fileSystem = FileSystem.get(new URI(hdfsUrl), conf,userName);
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             } catch (InterruptedException e) {
