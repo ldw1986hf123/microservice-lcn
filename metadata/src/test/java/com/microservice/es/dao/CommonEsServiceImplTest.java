@@ -50,6 +50,10 @@ public class CommonEsServiceImplTest extends BaseTest {
         shouldWhere.put("tableComment", "s打");
         mustWhere.put("should-1", shouldWhere);
 
+
+
+
+
         String[] includeFields = {"id", "projectId", "tableName", "tableComment", "dataSourceName", "createdBy", "dataSourceType", "dataSourceId",
                 "createdTime", "updatedTime", "relType"};
         Map<String, Object> data = commonEsService.searchIndex(index, 1, 50, mustWhere, null, null, includeFields, null, 30L, true);
