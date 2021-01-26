@@ -1,6 +1,7 @@
 package com.ldw.microservice.controller;
 
 import com.ldw.microservice.entity.Dept;
+import com.ldw.microservice.service.DeptFeignService;
 import com.ldw.microservice.service.DeptSercice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
@@ -17,6 +18,11 @@ public class DeptController {
     private @Autowired
     DiscoveryClient discoveryClient;
 
+
+    private @Autowired
+    DeptFeignService deptFeignService;
+
+
     @RequestMapping(value = "dept/get/{id}", method = RequestMethod.GET)
     public Dept get(@PathVariable("id") Long id) {
         return deptSercice.findById(id);
@@ -27,7 +33,6 @@ public class DeptController {
         return deptSercice.addDpet(dept);
     }
 
-    @SuppressWarnings("rawtypes")
     @RequestMapping(value = "dept/list", method = RequestMethod.GET)
     public List list() {
         return deptSercice.findAll();
@@ -48,5 +53,11 @@ public class DeptController {
         }
         return list;
     }
+
+    @RequestMapping(value = "feign/list", method = RequestMethod.GET)
+    public List feignList() {
+        return deptFeignService.list();
+    }
+
 
 }

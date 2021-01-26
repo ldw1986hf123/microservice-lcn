@@ -1,6 +1,7 @@
 package com.ldw.metadata.collector;
 
 import com.alibaba.fastjson.JSON;
+import com.ldw.metadata.MetadataApplication;
 import com.ldw.metadata.vo.JdbcDatasourceVO;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -12,7 +13,7 @@ import java.sql.Statement;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = MetadataApplication.class)
 public abstract class BaseTest {
     Statement statement;
     ResultSet resultSet;

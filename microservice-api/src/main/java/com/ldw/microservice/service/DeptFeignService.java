@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ldw.microservice.entity.Dept;
 
-//@FeignClient(name = "bank-b")
 @FeignClient(name = "MICROSERVICE-DEPT" )
 public interface DeptFeignService {
 
@@ -19,6 +18,6 @@ public interface DeptFeignService {
     public Dept get(@PathVariable("id") Long id);
 
     @SuppressWarnings("rawtypes")
-    @RequestMapping("/dept/list")
+    @RequestMapping("/dept/list1")
     public List list();
 }

@@ -14,14 +14,15 @@
 		<module>microservice-eureka-7003</module>
 		<module>microservice-privoider-dept-8002</module>
 		<module>microservice-privoider-dept-8003</module>
-		<module>microservice-comsumer-dept-feign</module>
 		<module>microservice-privoider-hystrix-dept-8001</module>
 		<module>microservice-comsumer-dept-hystrix-dashbord</module>
-		<module>microservice-zuul-gateway-9527</module>
 		<module>microservice-lcnTransactionManager-7970</module>
         <module>microservice-provider-docker_8004</module>
         <module>microservice-gateway</module>
-        <module>microservice-admin</module>
+        <module>microservice-hive</module>
+        <module>metadata</module>
+        <module>microservice-redisgraph</module>
+		<module>microservice-elasticsearch</module>
     </modules>
 
 
@@ -30,6 +31,7 @@
 		<spring.version>5.0.0.RELEASE</spring.version>
 		<junit.version>4.12</junit.version>
 		<log4j.version>1.2.17</log4j.version>
+
 	</properties>
 
 	<dependencyManagement>

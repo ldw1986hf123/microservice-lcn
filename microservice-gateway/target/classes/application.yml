@@ -1,33 +1,37 @@
-###################################
 #服务启动端口的配置
-###################################
 server:
   port: 9527
 
-###############################################################
 # eureka 的相关配置
 # 如果不需要 结合eureka 使用，可以不要这一段配置
-###############################################################
 eureka:
   client:
     fetch-registry: true
-    register-with-eureka: false     # 是否注册到eureka
+    register-with-eureka: true  # 是否注册到eureka
     service-url:
-      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+      defaultZone: http://127.0.0.1:7001/eureka/,http://127.0.0.1:7002/eureka/,http://127.0.0.1:7003/eureka/
   instance:
-    prefer-ip-address: false
+    prefer-ip-address: true
     hostname: microservice-gateway
-
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
 
 spring:
+  boot:
+    admin:
+      client:
+        url: http://localhost:8788
+    redis:
+      database: 0
+      host: 127.0.0.1
+      port: 6379
+      open: true
+      key-prefix: coral:gateway
+      expire: 30
   cloud:
-    #################################
     #   gateway相关配置
-    #################################
     gateway:
-      ################################
       # 配置允许跨域请求
-      ################################
       globalcors:
         cors-configurations:
           '[/**]':
@@ -35,9 +39,8 @@ spring:
             allowedMethods:
               - GET
               - POST
-      #    路由定义
+      #    路由定义   也可以通过类定义
       routes:
-
         - id: baidu
           uri: https://www.baidu.com
           predicates:
@@ -51,22 +54,74 @@ spring:
             - Path=/eureka-manage/**
           filters:
             - StripPrefix=1
+            - name: RequestRateLimiter
+              args:
+                key-resolver: '#{@apiKeyResolver}'      # 根据url
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 3
 
-        - id: sina
-          uri: https://www.sina.com.cn/
+        - id: gate-way-service
+          uri: lb://microservice-gateway
           predicates:
-            - Path=/sina/**
+            - Path=/gate-service/**
           filters:
             - StripPrefix=1
 
-org:
-  my:
-    jwt:
-      #跳过认证的路由
-      skip-auth-urls:
-        - /baidu
-      ############################################
-      #   有效时长
-      #     单位：d:天、h:小时、m:分钟、s:秒
-      ###########################################
-      effective-time: 1m
+
+        - id: limit_route_uri
+          uri: lb://microservice-dept
+          predicates:
+            - Path=/uri_limit/**
+          filters:
+            - StripPrefix=1
+            - name: RequestRateLimiter
+              args:
+                key-resolver: '#{@uriKeyResolver}'      # 根据url
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 3
+
+
+
+        - id: limit_route
+          uri: lb://microservice-dept
+          predicates:
+            - Path=/xianliu/**
+          filters:
+            - StripPrefix=1
+            - name: RequestRateLimiter
+              args:
+                key-resolver: '#{@hostAddrKeyResolver}'      # 根据IP限流
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 30
+  application:
+    name: microservice-gateway
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"      #配置说明：management.endpoints.web.exposure.include 暴露所有的gateway端点
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      show-details: ALWAYS
+
+#safe path
+auth-skip:
+  dataworks-servers:
+    - APP-HABO-SERVICE
+    - METADATA-DATASOURCE-SERVICE
+    - METADATA-DATA-LINEAGE-SERVICE
+    - METADATA-QUOTA-DICT-SERVICE
+    - METADATA-TABLE-DICT-SERVICE
+    - APP-LUBAN-DASHBOARD-SERVICE
+    - BASE-SQL-SUBMISSION-SERVICE
+    - APP-LUBAN-BACKEND-SERVICE
+  api-urls:
+    #habo
+    - /task/workspace
+    - /task/callback
+    - /task/exec
+    - /task/sch/config
+    - /user/group
+    - /health

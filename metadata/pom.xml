@@ -125,15 +125,6 @@
                     <groupId>org.eclipse.jetty</groupId>
                     <artifactId>*</artifactId>
                 </exclusion>
-                <!-- <exclusion> <groupId>org.apache.hive</groupId> <artifactId>hive-shims</artifactId>
-                    </exclusion> -->
-                <!-- <exclusion> <groupId>org.apache.hive</groupId> <artifactId>hive-metastore</artifactId>
-                    </exclusion> <exclusion> <groupId>org.apache.hive</groupId> <artifactId>hive-common</artifactId>
-                    </exclusion> <exclusion> <groupId>org.apache.hive</groupId> <artifactId>hive-service</artifactId>
-                    </exclusion> <exclusion> <groupId>org.apache.hive</groupId> <artifactId>hive-service-rpc</artifactId>
-                    </exclusion> <exclusion> <groupId>org.apache.hive</groupId> <artifactId>hive-serde</artifactId>
-                    </exclusion> <exclusion> <groupId>org.apache.hive</groupId> <artifactId>hive-upgrade-acid</artifactId>
-                    </exclusion> -->
             </exclusions>
         </dependency>
         <dependency>
@@ -152,6 +143,23 @@
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
             <version>1.4.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+            <version>7.5.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-client</artifactId>
+            <version>7.5.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-high-level-client</artifactId>
+            <version>7.5.0</version>
         </dependency>
     </dependencies>
 

@@ -18,12 +18,12 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+      defaultZone: http://192.168.171.130/eureka/
   instance:
     instance-id: microservice_dept_8002
     prefer-ip-address: true
-info:
-  app.name: microservice
-  company.name: www.ldw.com
-  build.artifactId: $project.artifactId$
-  build.version: $project.version$
+#info:
+#  app.name: microservice
+#  company.name: www.ldw.com
+#  build.artifactId: $project.artifactId$
+#  build.version: $project.version$
