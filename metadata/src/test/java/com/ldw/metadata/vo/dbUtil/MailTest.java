@@ -26,8 +26,8 @@ class Main {
     public static String myEmailSMTPHost = "smtp.exmail.qq.com";
 
     // 收件人邮箱（替换为自己知道的有效邮箱）
-//    public static String receiveMailAccount = "ldw1986hf123@163.com";
-    public static String receiveMailAccount = "118001489@qq.com";
+    public static String receiveMailAccount = "314445417@qq.com";
+
     public static void main(String[] args) throws Exception {
         // 1. 创建参数配置, 用于连接邮件服务器的参数配置
         Properties props = new Properties();                    // 参数配置
@@ -96,7 +96,7 @@ class Main {
         MimeMessage message = new MimeMessage(session);
 
         // 2. From: 发件人（昵称有广告嫌疑，避免被邮件服务器误认为是滥发广告以至返回失败，请修改昵称）
-        message.setFrom(new InternetAddress(sendMail, "【阿园】 发生变化", "UTF-8"));
+        message.setFrom(new InternetAddress(sendMail,  "UTF-8"));
 
         // 3. To: 收件人（可以增加多个收件人、抄送、密送）
         message.setRecipient(MimeMessage.RecipientType.TO, new InternetAddress(receiveMail, "XX用户", "UTF-8"));
@@ -106,12 +106,15 @@ class Main {
         receiceMailList.add("314445417@qq.com");
         receiceMailList.add("118001489@qq.com");
 
-     /*   List<InternetAddress> internetAddressList = new ArrayList<>();
-        for(int i=0;i<receiceMailList.size();i++){
-            internetAddressList.add(new InternetAddress(receiceMailList.get(i)));
+        List<InternetAddress> internetAddressList = new ArrayList<>();
+        InternetAddress[] sendTo = new InternetAddress[1];
+    /*   for (int i=0;i<receiceMailList.size();i++){
+            sendTo[i]= new InternetAddress(receiceMailList.get(i));
         }*/
-/*        InternetAddress[] address =internetAddressList.toArray(new InternetAddress[internetAddressList.size()]);
-        message.setRecipients(MimeMessage.RecipientType.TO, address);*/
+        sendTo[0]= new InternetAddress("314445417@qq.com");
+/*        sendTo[0]= new InternetAddress("118001489@qq.com");
+        sendTo[0]= new InternetAddress("314445417@qq.com");*/
+        message.addRecipients(MimeMessage.RecipientType.TO, sendTo);
         // 4. Subject: 邮件主题（标题有广告嫌疑，避免被邮件服务器误认为是滥发广告以至返回失败，请修改标题）
         message.setSubject("元数据测试", "UTF-8");
 
