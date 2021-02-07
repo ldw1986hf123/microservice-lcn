@@ -1,8 +1,0 @@
-spring:
-  cloud:
-    config:
-      server:
-      name: microservice-config-client
-      profile: dev
-      label: useSwagger
-      uri: http://localhost:3301/

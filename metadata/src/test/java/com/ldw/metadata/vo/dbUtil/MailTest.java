@@ -111,6 +111,8 @@ class Main {
     /*   for (int i=0;i<receiceMailList.size();i++){
             sendTo[i]= new InternetAddress(receiceMailList.get(i));
         }*/
+
+    
         sendTo[0]= new InternetAddress("314445417@qq.com");
 /*        sendTo[0]= new InternetAddress("118001489@qq.com");
         sendTo[0]= new InternetAddress("314445417@qq.com");*/

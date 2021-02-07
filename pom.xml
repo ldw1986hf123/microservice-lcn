@@ -6,24 +6,16 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
-		<module>microservice-api</module>
-		<module>microservice-privoider-dept-8001</module>
-		<module>microservice-comsumer-dept-80</module>
 		<module>microservice-eureka-7001</module>
 		<module>microservice-eureka-7002</module>
 		<module>microservice-eureka-7003</module>
-		<module>microservice-privoider-dept-8002</module>
-		<module>microservice-privoider-dept-8003</module>
-		<module>microservice-privoider-hystrix-dept-8001</module>
-		<module>microservice-comsumer-dept-hystrix-dashbord</module>
-		<module>microservice-lcnTransactionManager-7970</module>
         <module>microservice-provider-docker_8004</module>
         <module>microservice-gateway</module>
         <module>microservice-hive</module>
         <module>metadata</module>
         <module>microservice-redisgraph</module>
 		<module>microservice-elasticsearch</module>
-    </modules>
+	</modules>
 
 
 	<properties>
@@ -31,7 +23,8 @@
 		<spring.version>5.0.0.RELEASE</spring.version>
 		<junit.version>4.12</junit.version>
 		<log4j.version>1.2.17</log4j.version>
-
+		<lombok.version>1.18.12</lombok.version>
+		<elasticSearch.version>7.5.1</elasticSearch.version>
 	</properties>
 
 	<dependencyManagement>
