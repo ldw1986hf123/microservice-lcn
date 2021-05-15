@@ -19,8 +19,16 @@ public class Task implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        log.info("{}---------   ", DateUtil.now()
-        );
+        log.info("{} 执行", DateUtil.now());
+        for (int i = 0; i < 300; i++) {
+            log.info("执行第{}次",i);
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
 }

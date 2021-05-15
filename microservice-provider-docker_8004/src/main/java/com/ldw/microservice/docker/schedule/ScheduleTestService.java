@@ -27,7 +27,7 @@ import java.util.Set;
  */
 @Component
 @Slf4j
-public class ScheduleTest {
+public class ScheduleTestService {
 
 
     @Autowired
@@ -37,8 +37,8 @@ public class ScheduleTest {
     /**
      * @desc 执行扫描，每分钟执行一次
      */
-    @Async
-    @Scheduled(cron = "0 */1 * * * ?")
+//    @Async
+//    @Scheduled(cron = "0 */1 * * * ?")
     public void execute() {
         try {
             Set<TriggerKey> triggerKeys = scheduler.getTriggerKeys(GroupMatcher.triggerGroupEquals(Scheduler.DEFAULT_GROUP));

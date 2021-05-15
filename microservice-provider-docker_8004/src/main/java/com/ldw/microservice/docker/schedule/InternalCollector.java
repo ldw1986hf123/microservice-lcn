@@ -38,19 +38,10 @@ public class InternalCollector {
     /**
      * @desc 执行扫描，每分钟执行一次
      */
-    @Async
-    @Scheduled(cron = "0 */3 * * * ?")
+//    @Async
+//    @Scheduled(cron = "0 */3 * * * ?")
     public void execute() {
-        log.info("{} 执行", DateUtil.now());
-        for (int i = 0; i < 300; i++) {
-            log.info("执行第{}次",i);
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
 
-        }
     }
 
 

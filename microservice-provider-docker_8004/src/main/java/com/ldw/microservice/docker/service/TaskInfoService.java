@@ -3,6 +3,8 @@ package com.ldw.microservice.docker.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ldw.microservice.docker.eo.TaskInfoDO;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -22,6 +24,10 @@ public interface TaskInfoService extends IService<TaskInfoDO> {
 
 
     Boolean run(Long taskId );
+
+    Boolean stop(String taskId);
+
+    List getAllTaskKeys();
 }
 
 
