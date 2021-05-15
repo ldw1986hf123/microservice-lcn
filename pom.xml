@@ -14,7 +14,6 @@
         <module>microservice-hive</module>
         <module>metadata</module>
         <module>microservice-redisgraph</module>
-		<module>microservice-elasticsearch</module>
 	</modules>
 
 

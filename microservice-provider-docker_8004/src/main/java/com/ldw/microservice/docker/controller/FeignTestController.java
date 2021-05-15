@@ -1,8 +1,6 @@
 package com.ldw.microservice.docker.controller;
 
 
-import com.ldw.microservice.service.CommonEsServiceApi;
-import com.ldw.microservice.service.vo.CommonSearchVO;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +17,10 @@ import java.util.Map;
 @RequestMapping("/feignTest")
 @Slf4j
 public class FeignTestController {
-    @Autowired
-    private CommonEsServiceApi commonEsService;
+/*    @Autowired
+    private CommonEsServiceApi commonEsService;*/
 
-    @RequestMapping(path = "get", method = RequestMethod.GET)
+  /*  @RequestMapping(path = "get", method = RequestMethod.GET)
     public String get() {
         CommonSearchVO commonSearchVO = new CommonSearchVO();
 
@@ -32,7 +30,7 @@ public class FeignTestController {
         commonSearchVO.setPagingFlag(false);
         commonEsService.searchIndex(commonSearchVO);
         return "get";
-    }
+    }*/
 
 
 }

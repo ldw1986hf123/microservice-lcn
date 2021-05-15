@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deepexi.data.metadata.mapper.TaskInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.deepexi.data.metadata.domain.eo.TaskInfoDO">
+    <result column="id" property="id" />
+    <result column="tenant_id" property="tenantId" />
+    <result column="version" property="version" />
+    <result column="is_deleted" property="isDeleted" />
+    <result column="created_time" property="createdTime" />
+    <result column="created_by" property="createdBy" />
+    <result column="updated_time" property="updatedTime" />
+    <result column="updated_by" property="updatedBy" />
+    <result column="task_type" property="taskType" />
+    <result column="begin_effective_time" property="beginEffectiveTime" />
+    <result column="end_effective_time" property="endEffectiveTime" />
+    <result column="rel_type" property="relType" />
+    <result column="datasource_type" property="datasourceType" />
+    <result column="datasource_id" property="datasourceId" />
+    <result column="collect_period" property="collectPeriod" />
+    <result column="hour_begin_time" property="hourBeginTime" />
+    <result column="minute_begin_time" property="minuteBeginTime" />
+    <result column="hour_end_time" property="hourEndTime" />
+    <result column="minute_end_time" property="minuteEndTime" />
+    <result column="hour_collect_time" property="hourCollectTime" />
+    <result column="minute_collect_time" property="minuteCollectTime" />
+    <result column="interval_collect_time" property="intervalCollectTime" />
+    <result column="specified_date_weekly" property="specifiedDateWeekly" />
+    <result column="specified_date_monthly" property="specifiedDateMonthly" />
+    <result column="cron" property="cron" />
+    <result column="status" property="status" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        tenant_id,
+        version,
+        is_deleted,
+        created_time,
+        created_by,
+        updated_time,
+        updated_by,
+        task_type, begin_effective_time, end_effective_time, rel_type, datasource_type,
+        datasource_id,
+        collect_period,
+        hour_begin_time,
+        minute_begin_time, hour_end_time,
+        minute_end_time, hour_collect_time, minute_collect_time, interval_collect_time,
+        specified_date_weekly, specified_date_monthly, cron, status
+    </sql>
+
+    <select id="getByDatasourceIdAndTenantId" resultMap="BaseResultMap">
+        SELECT
+            <include refid="Base_Column_List" />
+        FROM
+            task_info
+        WHERE
+            is_deleted=0
+        AND datasource_id = #{datasourceId}
+        AND tenant_id=#{tenantId}
+    </select>
+    
+    
+    
+    
+</mapper>

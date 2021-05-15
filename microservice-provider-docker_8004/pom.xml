@@ -15,20 +15,20 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>com.ldw.springcloud</groupId>
-            <artifactId>microservice-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+        <!--  <dependency>
+              <groupId>com.ldw.springcloud</groupId>
+              <artifactId>microservice-api</artifactId>
+              <version>${project.version}</version>
+          </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.ldw.springcloud</groupId>
-            <artifactId>microservice-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+        <!--   <dependency>
+               <groupId>com.ldw.springcloud</groupId>
+               <artifactId>microservice-api</artifactId>
+               <version>${project.version}</version>
+           </dependency>-->
         <!-- 构建Restful API -->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -48,6 +48,42 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.0.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus</artifactId>
+            <version>3.0.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>3.0.6</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.11</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.5.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.7</version>
         </dependency>
     </dependencies>
 
@@ -83,42 +119,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--   <plugin>
-                   <groupId>org.springframework.boot</groupId>
-                   <artifactId>spring-boot-maven-plugin</artifactId>
-               </plugin>-->
-            <!-- Docker maven plugin -->
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>0.4.1</version>
-                <configuration>
-                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-                    <dockerHost>http://192.168.3.11:2375</dockerHost>
-                    <dockerDirectory>src/main/docker</dockerDirectory>
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.jar</include>
-                        </resource>
-                    </resources>
-                </configuration>
-            </plugin>
-
-
-            <!--  <plugin>
-                  <groupId>com.spotify</groupId>
-                  <artifactId>dockerfile-maven-plugin</artifactId>
-                  <version>1.3.6</version>
-                  <configuration>
-                      <repository>${docker.image.prefix}/${project.artifactId}</repository>
-                      <dockerConfigFile>docker</dockerConfigFile>
-                      <buildArgs>
-                          <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
-                      </buildArgs>
-                  </configuration>
-              </plugin>-->
         </plugins>
     </build>
 

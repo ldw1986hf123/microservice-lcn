@@ -4,7 +4,6 @@ package com.ldw.microservice.docker.controller;
 import com.ldw.microservice.docker.dto.DemoDto;
 import com.ldw.microservice.docker.dto.DemoOutputDto;
 import com.ldw.microservice.docker.dto.FFResponseModel;
-import com.ldw.microservice.entity.Dept;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
 
@@ -25,6 +24,7 @@ public class DeptController {
 
     @ApiOperation(value = "抢红包一", nickname = "爪哇笔记")
     @RequestMapping(path = "get", method = RequestMethod.GET)
+    @ResponseBody
     public String get() {
         System.out.println("get");
         return "get";
