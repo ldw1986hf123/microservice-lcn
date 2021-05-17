@@ -52,6 +52,11 @@ TaskInfoServiceImpl extends ServiceImpl<TaskInfoMapper, TaskInfoDO> implements T
     }
 
 
+    /**
+     * 这样，可以将定时任务移除掉，但是是无法暂停当前正在只想的定时任务的，
+     * @param taskId
+     * @return
+     */
     @Override
     public Boolean stop(String taskId) {
         try {
