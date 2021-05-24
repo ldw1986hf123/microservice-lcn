@@ -64,7 +64,7 @@ public class Task implements InterruptableJob {
 
             if (isJobInterrupted) {
                 log.info("Job " + lockKey + " did not complete");
-                throw new Exception("停止了        ");
+//                throw new Exception("停止了        ");
             } else {
                 log.info("Job " + lockKey + " not complete");
             }
@@ -78,7 +78,7 @@ public class Task implements InterruptableJob {
         isJobInterrupted = true;
         if (thisThread != null) {
             // this call causes the ClosedByInterruptException to happen
-            thisThread.interrupt();
+            thisThread.stop();
         }
     }
 }

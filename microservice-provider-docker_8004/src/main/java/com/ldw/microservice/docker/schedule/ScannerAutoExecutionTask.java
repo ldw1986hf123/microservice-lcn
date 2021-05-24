@@ -4,6 +4,8 @@ import cn.hutool.core.date.DateUtil;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
+import org.quartz.impl.StdSchedulerFactory;
+import org.quartz.impl.matchers.GroupMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -42,9 +44,9 @@ public class ScannerAutoExecutionTask {
 //    @Async
 //    @Scheduled(cron = "0 */1 * * * ?")
     public void execute() throws ParseException, SchedulerException {
-    /*    try {
+        try {
             log.info("{}----------开始任务清理", DateUtil.now());
-            String cronExpress = "0 26,29,33 * * * ?";
+            String cronExpress = "0 */1 * * * ?";
             String taskCode = "taskCode_1";
             JobDetailFactoryBean jobDetailFactoryBean = new JobDetailFactoryBean();
             jobDetailFactoryBean.setName(taskCode);
@@ -63,7 +65,7 @@ public class ScannerAutoExecutionTask {
             cronTriggerFactoryBean.setBeanName(taskCode);
             cronTriggerFactoryBean.setCronExpression(cronExpress);
             cronTriggerFactoryBean.setGroup(Scheduler.DEFAULT_GROUP);
-            cronTriggerFactoryBean.setName("cron_" + taskCode);
+            cronTriggerFactoryBean.setName(taskCode);
             cronTriggerFactoryBean.afterPropertiesSet();
 
             scheduler.scheduleJob(jobDetailFactoryBean.getObject(), cronTriggerFactoryBean.getObject());
@@ -71,10 +73,10 @@ public class ScannerAutoExecutionTask {
             log.info("{}----------结束任务清理", DateUtil.now());
         } catch (Exception e) {
             log.error(" {} 任务检查失败 !", DateUtil.now(), e);
-        }*/
+        }
 
         // 2. 定义一个Trigger，定义该job在4秒后首次执行，并且每隔两秒执行一次
-        Date startTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2015-09-17 22:40:00");
+      /*  Date startTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2015-09-17 22:40:00");
         startTime.setTime(startTime.getTime());
         SimpleTrigger trigger = (SimpleTrigger) TriggerBuilder.newTrigger()
                 .withIdentity("myTrigger", "group1")// 定义名字和组
@@ -90,7 +92,7 @@ public class ScannerAutoExecutionTask {
         JobDetail jobDetail = newJob(Task.class) // 定义Job类为HelloQuartz类，这是真正的执行逻辑所在
                 .withIdentity("myJob") // 定义name/group
                 .build();
-        scheduler.scheduleJob(jobDetail, trigger);
+        scheduler.scheduleJob(jobDetail, trigger);*/
     }
 
     /**
@@ -108,4 +110,30 @@ public class ScannerAutoExecutionTask {
         }
         return jdm;
     }
+
+
+    public Boolean interrupt(String taskId) {
+        try {
+            // tell the scheduler to interrupt our job
+            Set<TriggerKey> triggerKeys = scheduler.getTriggerKeys(GroupMatcher.triggerGroupEquals(Scheduler.DEFAULT_GROUP));
+            triggerKeys.forEach(triggerKey -> {
+                log.info(triggerKey.getGroup() + "-" + triggerKey.getName()
+                );
+            });
+
+            //3. 创建scheduler
+            JobDetail jobDetail = scheduler.getJobDetail(JobKey.jobKey(taskId, Scheduler.DEFAULT_GROUP));
+//            scheduler.interrupt(jobDetail.getKey());
+            scheduler.unscheduleJob(TriggerKey.triggerKey(taskId, Scheduler.DEFAULT_GROUP));
+            scheduler.pauseJob(jobDetail.getKey());
+            scheduler.pauseTrigger(TriggerKey.triggerKey(taskId, Scheduler.DEFAULT_GROUP));
+            scheduler.deleteJob(jobDetail.getKey());
+            log.info("{}任务停止成功", taskId);
+        } catch (SchedulerException e) {
+            log.error("{}任务停止失败", taskId, e);
+        }
+        return true;
+    }
+
+
 }

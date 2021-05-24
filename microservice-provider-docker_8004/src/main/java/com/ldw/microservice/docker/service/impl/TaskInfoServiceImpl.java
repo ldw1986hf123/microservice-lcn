@@ -14,6 +14,7 @@ import org.quartz.impl.matchers.GroupMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -46,7 +47,7 @@ TaskInfoServiceImpl extends ServiceImpl<TaskInfoMapper, TaskInfoDO> implements T
     }
 
     @Override
-    public Boolean run(Long taskId) {
+    public Boolean run(Long taskId) throws ParseException, SchedulerException {
         scannerAutoExecutionTask.execute();
         return true;
     }
@@ -71,7 +72,6 @@ TaskInfoServiceImpl extends ServiceImpl<TaskInfoMapper, TaskInfoDO> implements T
         }
         return true;
     }
-
 
     public List<Object> getAllTaskKeys() {
         Set<TriggerKey> triggerKeys = null;

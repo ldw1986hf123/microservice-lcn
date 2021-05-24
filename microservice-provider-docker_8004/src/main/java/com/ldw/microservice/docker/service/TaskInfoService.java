@@ -2,7 +2,9 @@ package com.ldw.microservice.docker.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ldw.microservice.docker.eo.TaskInfoDO;
+import org.quartz.SchedulerException;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -23,7 +25,7 @@ public interface TaskInfoService extends IService<TaskInfoDO> {
     TaskInfoDO getByDatasourceIdAndTenantId(Long datasourceId, String tenantId);
 
 
-    Boolean run(Long taskId );
+    Boolean run(Long taskId ) throws ParseException, SchedulerException;
 
     Boolean stop(String taskId);
 

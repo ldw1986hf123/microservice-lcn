@@ -19,7 +19,7 @@ public class FirstIniTimer {
     ScannerAutoExecutionTask scannerAutoExecutionTask;
 
 
-    @PostConstruct
+//    @PostConstruct
     public void execute() throws ParseException, SchedulerException {
         scannerAutoExecutionTask.execute();
     }

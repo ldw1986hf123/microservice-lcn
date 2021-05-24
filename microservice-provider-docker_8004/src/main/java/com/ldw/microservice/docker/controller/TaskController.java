@@ -1,6 +1,7 @@
 package com.ldw.microservice.docker.controller;
 
 
+import com.ldw.microservice.docker.schedule.ScannerAutoExecutionTask;
 import com.ldw.microservice.docker.service.TaskInfoService;
 import com.ldw.microservice.docker.util.Payload;
 import lombok.extern.slf4j.Slf4j;
@@ -18,8 +19,10 @@ public class TaskController {
     TaskInfoService taskInfoService;
 
 
+    @Autowired
+    ScannerAutoExecutionTask scannerAutoExecutionTask;
+
     /**
-     * @param taskId
      * @return
      * @desc 运行任务 同aop的方法来做运行任务日志记录，不干扰主流程逻辑
      */
@@ -64,5 +67,16 @@ public class TaskController {
         return new Payload(result);
     }
 
+    @GetMapping("/interrupt/{taskId}")
+    public Payload interrupt(@PathVariable("taskId") String taskId) {
+        log.info("getAllTaskKeys kkkkss**************");
+        List result = null;
+        try {
+            scannerAutoExecutionTask.interrupt(taskId);
+        } catch (Exception e) {
+            log.error("运行出错", e);
+        }
+        return new Payload(result);
+    }
 
 }
