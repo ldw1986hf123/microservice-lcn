@@ -106,7 +106,6 @@ public class AutoCollectorMetadataPostgresql implements AutoCollectorMetadata{
             tableNameList.forEach(empNo -> parameters.add("?"));
             String commaSepParameters = String.join(",", parameters);
 
-            //todo  这样设置参数的方法不好，待优化  设置数据库的名称
             String selectQuery = MessageFormat.format(SELECT_ALL_CONSTRAINTS, "%s", "'" + databaseName + "'");
             selectQuery = String.format(selectQuery, commaSepParameters);
 
