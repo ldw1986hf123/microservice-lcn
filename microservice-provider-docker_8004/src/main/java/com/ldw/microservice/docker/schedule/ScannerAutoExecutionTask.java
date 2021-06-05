@@ -41,8 +41,8 @@ public class ScannerAutoExecutionTask {
     /**
      * @desc 执行扫描，每分钟执行一次
      */
-//    @Async
-//    @Scheduled(cron = "0 */1 * * * ?")
+    @Async
+    @Scheduled(cron = "0 */1 * * * ?")
     public void execute() throws ParseException, SchedulerException {
         try {
             log.info("{}----------开始任务清理", DateUtil.now());

@@ -7,9 +7,8 @@ import org.quartz.*;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * @desc 任务
@@ -19,9 +18,10 @@ import java.util.concurrent.TimeUnit;
 @PersistJobDataAfterExecution
 @DisallowConcurrentExecution
 @Component
+@Lazy
 public class Task implements InterruptableJob {
 
-    @Autowired
+    @Autowired(required = false)
     private RedissonClient redissonClient;
 
     private volatile Thread thisThread;
@@ -78,7 +78,7 @@ public class Task implements InterruptableJob {
         isJobInterrupted = true;
         if (thisThread != null) {
             // this call causes the ClosedByInterruptException to happen
-            thisThread.stop();
+            thisThread.interrupt();
         }
     }
 }

@@ -10,3 +10,4 @@ build/
 *.diff
 *.patch
 *.tmp
+*.iml
