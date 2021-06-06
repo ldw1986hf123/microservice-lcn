@@ -1,6 +1,7 @@
 package com.ldw.microservice.docker.collector;
 
 import com.ldw.microservice.docker.dto.JdbcDatasourceDTO;
+import com.ldw.microservice.docker.dto.MetadataConstraintDTO;
 import com.ldw.microservice.docker.dto.MetadataPartitionDTO;
 import com.ldw.microservice.docker.dto.MetadataTableDTO;
 
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+
 @Validated
 public interface AutoCollectorMetadata {
 
@@ -23,4 +25,7 @@ public interface AutoCollectorMetadata {
     List<MetadataTableDTO> collect(JdbcDatasourceDTO datasourceDTO) throws Exception;
 
     List<MetadataPartitionDTO> getPartitionMetadata(Connection connection, @NotNull List tableNameList) throws SQLException;
+
+    List<MetadataConstraintDTO> getConstraintMetadata(Connection connection, List tableNameList);
+
 }

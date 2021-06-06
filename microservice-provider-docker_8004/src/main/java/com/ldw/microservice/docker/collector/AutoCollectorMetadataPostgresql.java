@@ -2,12 +2,12 @@ package com.ldw.microservice.docker.collector;
 
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.ldw.microservice.docker.config.DBConfig;
-import com.ldw.microservice.docker.dto.JdbcDatasourceDTO;
-import com.ldw.microservice.docker.dto.MetadataConstraintDTO;
-import com.ldw.microservice.docker.dto.MetadataPartitionDTO;
-import com.ldw.microservice.docker.dto.MetadataTableDTO;
+import com.ldw.microservice.docker.dto.*;
+import com.ldw.microservice.docker.enums.CommonConstants;
+import com.ldw.microservice.docker.enums.ConstraintTypeEnum;
 import com.ldw.microservice.docker.util.DBUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,10 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -51,13 +48,12 @@ public class AutoCollectorMetadataPostgresql implements AutoCollectorMetadata {
             " JOIN pg_class child ON pg_inherits.inhrelid = child.oid " +
             " JOIN pg_namespace nmsp_parent ON nmsp_parent.oid = parent.relnamespace " +
             " JOIN pg_namespace nmsp_child ON nmsp_child.oid = child.relnamespace  " +
-            "WHERE parent.relname in ( %s ) " ;
+            "WHERE parent.relname in ( %s ) ";
 
-    private final String SELECT_ALL_CONSTRAINTS = " SELECT isc.constraint_name AS name,  isc.table_name AS tableCode, isc.CONSTRAINT_type AS type " +
-            ", ik.COLUMN_NAME as columnCode FROM  information_schema.table_constraints AS isc " +
-            "INNER JOIN information_schema.KEY_COLUMN_USAGE AS ik ON ( isc.TABLE_NAME = ik.TABLE_NAME " +
-            "AND isc.CONSTRAINT_NAME = ik.CONSTRAINT_NAME  and isc.table_schema = ik.table_schema)  " +
-            "WHERE  isc.table_name in (   {0}   )  and isc.TABLE_SCHEMA= {1}  ";
+    private final String SELECT_ALL_CONSTRAINTS = "SELECT tc.CONSTRAINT_NAME as name, tc.TABLE_NAME as \"tablecode\", kcu.COLUMN_NAME as \"columnCode\", constraint_type as type  " +
+            "FROM information_schema.table_constraints AS tc JOIN information_schema.key_column_usage AS kcu ON tc.CONSTRAINT_NAME = kcu.CONSTRAINT_NAME " +
+            " JOIN information_schema.constraint_column_usage AS ccu ON ccu.CONSTRAINT_NAME = tc.CONSTRAINT_NAME" +
+            "WHERE  tc.TABLE_NAME IN ( %s  );";
 
 
     @Autowired
@@ -65,14 +61,49 @@ public class AutoCollectorMetadataPostgresql implements AutoCollectorMetadata {
 
     @Override
     public List<MetadataTableDTO> collect(JdbcDatasourceDTO datasourceDTO) throws Exception {
-        return null;
+        List<MetadataTableDTO> metadataTableDTOS = new ArrayList<>();
+        List<String> tableCodeList = Arrays.asList("order_list", "s");
+
+        String url = "jdbc:postgresql://192.168.171.134:55433/postgres";
+        Connection connection = dBConfig.getSimpleConnection(url, "postgres", "abc123");
+
+        //查询分区
+        List<MetadataPartitionDTO> partitionMetadataVOS = getPartitionMetadata(connection, tableCodeList);
+        Map<String, List<MetadataPartitionDTO>> tableNameToPartition = partitionMetadataVOS.stream().collect(Collectors.groupingBy(MetadataPartitionDTO::getTableCode));
+
+        //查询 约束
+        List<MetadataConstraintDTO> constraintMetadataVOS = getConstraintMetadata(connection, tableCodeList);
+        Map<String, List<MetadataConstraintDTO>> tableNameToConstraint = constraintMetadataVOS.stream().collect(Collectors.groupingBy(MetadataConstraintDTO::getTableCode));
+
+
+        for (String tableCode : tableCodeList) {
+            MetadataTableDTO metadataTableDTO = new MetadataTableDTO();
+            /*取出一張表下的所有約束  ，然每個字段设置约束*/
+            List<MetadataConstraintDTO> tableNameToCostraints = tableNameToConstraint.get(tableCode);
+            if (CollectionUtils.isNotEmpty(tableNameToCostraints)) {
+            /*    for (MetadataColumnDTO columnMetadataVO : singleColumns) {
+                    String columnCode = columnMetadataVO.getCode();
+                    Map<String, List<MetadataConstraintDTO>> columnNameToConstraints = tableNameToCostraints.stream().collect(Collectors.groupingBy(MetadataConstraintDTO::getColumnCode));
+                    if (CollectionUtils.isNotEmpty(columnNameToConstraints.get(columnCode))) {
+                        setColumnProperties(columnNameToConstraints.get(columnCode), columnMetadataVO);
+                    }
+                }*/
+            }
+
+            List<MetadataPartitionDTO> singlePartitions = tableNameToPartition.get(tableCode);
+
+            metadataTableDTO.setPartitionDTOS(singlePartitions);
+            metadataTableDTO.setOwner("sys");
+        }
+        return metadataTableDTOS;
     }
 
     /**
      * 获取 分区 的元数据
      */
     @Override
-    public List<MetadataPartitionDTO> getPartitionMetadata(Connection connection, List tableNameList) throws SQLException {
+    public List<MetadataPartitionDTO> getPartitionMetadata(Connection connection, List tableNameList) throws
+            SQLException {
         List<MetadataPartitionDTO> partitionMetadataVOS = new ArrayList<>();
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -119,9 +150,9 @@ public class AutoCollectorMetadataPostgresql implements AutoCollectorMetadata {
 
     /**
      * 获取 约束  的元数据
-     * 一个字段可能会有多个元数据
+     * constraint_type有四种：UNIQUE、PRIMARY KEY、CHECK、FOREIGN KEY
      */
-    public List<MetadataConstraintDTO> getConstraintMetadata(Connection connection, List tableNameList, String databaseName) {
+    public List<MetadataConstraintDTO> getConstraintMetadata(Connection connection, List tableNameList) {
         List<MetadataConstraintDTO> constraintMetadataVOS = new ArrayList<>();
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -130,8 +161,7 @@ public class AutoCollectorMetadataPostgresql implements AutoCollectorMetadata {
             tableNameList.forEach(empNo -> parameters.add("?"));
             String commaSepParameters = String.join(",", parameters);
 
-            String selectQuery = MessageFormat.format(SELECT_ALL_CONSTRAINTS, "%s", "'" + databaseName + "'");
-            selectQuery = String.format(selectQuery, commaSepParameters);
+            String selectQuery = String.format(SELECT_ALL_CONSTRAINTS, commaSepParameters);
 
             stm = connection.prepareStatement(selectQuery);
             addParams(stm, tableNameList);
@@ -156,4 +186,34 @@ public class AutoCollectorMetadataPostgresql implements AutoCollectorMetadata {
         }
     }
 
+
+    /**
+     * 为字段设置各种信息  索引，主外键约束等
+     *
+     * @return
+     */
+     void setColumnProperties(List<MetadataConstraintDTO> metadataConstraintDTOS, MetadataColumnDTO metadataColumnDTO) {
+        StringBuffer result = new StringBuffer();
+        StringBuffer resultStr = new StringBuffer();
+
+        for (MetadataConstraintDTO metadataConstraintDTO : metadataConstraintDTOS) {
+            String tableName = metadataConstraintDTO.getTableCode();
+            String columnTableName = metadataColumnDTO.getTableCode();
+            String constraintType = metadataConstraintDTO.getType();
+
+            ConstraintTypeEnum constraintTypeEnum = ConstraintTypeEnum.getEnumByType(constraintType);
+            if (columnTableName.equals(tableName) && null != constraintTypeEnum) {
+                result.append(constraintTypeEnum.getCode()).append(",");
+                resultStr.append(constraintTypeEnum.getName()).append(" ");
+                if (ConstraintTypeEnum.PRIMARY_KEY.getType().equals(constraintType)) {
+                    metadataColumnDTO.setIsPrimaryKey(CommonConstants.IsPrimaryKey.YES);
+                } else if (ConstraintTypeEnum.FOREIGN_KEY.getType().equals(constraintType)) {
+                    metadataColumnDTO.setIsForeignKey(CommonConstants.IsForeignKey.YES);
+                }
+            }
+
+        }
+        metadataColumnDTO.setColumnConstraint(StringUtils.isBlank(result) ? result.toString() : result.deleteCharAt(result.length() - 1).toString());
+        metadataColumnDTO.setConstraintsStr(resultStr.toString());
+    }
 }
