@@ -14,7 +14,7 @@ import java.io.Serializable;
  */
 @ToString
 @Data
-public class MetadataPartitionDTO     implements Serializable {
+public class MetadataPartitionDTO implements Serializable {
     /**
      * 表ID
      */
@@ -65,5 +65,9 @@ public class MetadataPartitionDTO     implements Serializable {
      * 分区大小
      */
     private Long size;
+
+
+    private String hasChild;
+
 
 }

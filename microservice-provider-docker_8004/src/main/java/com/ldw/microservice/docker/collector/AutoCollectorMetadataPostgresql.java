@@ -1,5 +1,6 @@
 package com.ldw.microservice.docker.collector;
 
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.ldw.microservice.docker.config.DBConfig;
 import com.ldw.microservice.docker.dto.JdbcDatasourceDTO;
 import com.ldw.microservice.docker.dto.MetadataConstraintDTO;
@@ -16,6 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -29,33 +31,33 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Component
-public class AutoCollectorMetadataPostgresql implements AutoCollectorMetadata{
+public class AutoCollectorMetadataPostgresql implements AutoCollectorMetadata {
     //mysql in语句中参数个数是不限制的。不过对整段sql语句的长度有了限制（max_allowed_packet）。最大4M
-    private final String SELECT_ALL_TABLES = " SELECT TABLE_NAME as code ,TABLE_COMMENT name,TABLE_SCHEMA as  databaseName " +
-                                            ",create_time as createdTime ,update_time as updatedTime  FROM  information_schema.TABLES   " +
-                                            "where TABLE_TYPE='BASE TABLE' and TABLE_SCHEMA= ? ";
+ /*   private final String SELECT_ALL_TABLES = " SELECT TABLE_NAME as code ,TABLE_COMMENT name,TABLE_SCHEMA as  databaseName " +
+            ",create_time as createdTime ,update_time as updatedTime  FROM  information_schema.TABLES   " +
+            "where TABLE_TYPE='BASE TABLE' and TABLE_SCHEMA= ? ";
 
     private final String SELECT_ALL_COLUMN_NAME = "  SELECT COLUMN_NAME as code,TABLE_NAME AS tableCode, COLUMN_TYPE as dataType" +
-                                            ", CHARACTER_MAXIMUM_LENGTH as length, IS_NULLABLE as isNull, COLUMN_COMMENT  as name  " +
-                                            "FROM   information_schema.COLUMNS WHERE TABLE_NAME IN (  {0}  )  and TABLE_SCHEMA= {1}  ";
+            ", CHARACTER_MAXIMUM_LENGTH as length, IS_NULLABLE as isNull, COLUMN_COMMENT  as name  " +
+            "FROM   information_schema.COLUMNS WHERE TABLE_NAME IN (  {0}  )  and TABLE_SCHEMA= {1}  ";
 
     private final String SELECT_ALL_INDEX = "  SELECT table_name as tableCode,index_name as name,column_name as columnCode" +
-                                            ",index_type as type, index_comment as remark FROM information_schema.statistics " +
-                                            "WHERE table_name in (    {0}  )  and TABLE_SCHEMA= {1} ";
+            ",index_type as type, index_comment as remark FROM information_schema.statistics " +
+            "WHERE table_name in (    {0}  )  and TABLE_SCHEMA= {1} ";*/
 
-    private final String SELECT_ALL_PARTITION = " SELECT  parent.relname AS name, child.relname AS \"subPartitionName\"  " +
-                                        "FROM pg_inherits JOIN pg_class parent ON pg_inherits.inhparent = parent.oid " +
-                                        " JOIN pg_class child ON pg_inherits.inhrelid = child.oid " +
-                                        " JOIN pg_namespace nmsp_parent ON nmsp_parent.oid = parent.relnamespace " +
-                                        " JOIN pg_namespace nmsp_child ON nmsp_child.oid = child.relnamespace  " +
-                                        "WHERE parent.relname in ( %s ) " +
-            "\t ";
+    private final String SELECT_ALL_PARTITION = " SELECT  parent.relname AS \"tableCode\", child.relname AS \"name\" , " +
+            "  pg_relation_size(child.oid) AS size,  child.relhassubclass as \"hasChild\"  " +
+            " FROM pg_inherits JOIN pg_class parent ON pg_inherits.inhparent = parent.oid " +
+            " JOIN pg_class child ON pg_inherits.inhrelid = child.oid " +
+            " JOIN pg_namespace nmsp_parent ON nmsp_parent.oid = parent.relnamespace " +
+            " JOIN pg_namespace nmsp_child ON nmsp_child.oid = child.relnamespace  " +
+            "WHERE parent.relname in ( %s ) " ;
 
     private final String SELECT_ALL_CONSTRAINTS = " SELECT isc.constraint_name AS name,  isc.table_name AS tableCode, isc.CONSTRAINT_type AS type " +
-                                                ", ik.COLUMN_NAME as columnCode FROM  information_schema.table_constraints AS isc " +
-                                                "INNER JOIN information_schema.KEY_COLUMN_USAGE AS ik ON ( isc.TABLE_NAME = ik.TABLE_NAME " +
-                                                "AND isc.CONSTRAINT_NAME = ik.CONSTRAINT_NAME  and isc.table_schema = ik.table_schema)  " +
-                                                "WHERE  isc.table_name in (   {0}   )  and isc.TABLE_SCHEMA= {1}  ";
+            ", ik.COLUMN_NAME as columnCode FROM  information_schema.table_constraints AS isc " +
+            "INNER JOIN information_schema.KEY_COLUMN_USAGE AS ik ON ( isc.TABLE_NAME = ik.TABLE_NAME " +
+            "AND isc.CONSTRAINT_NAME = ik.CONSTRAINT_NAME  and isc.table_schema = ik.table_schema)  " +
+            "WHERE  isc.table_name in (   {0}   )  and isc.TABLE_SCHEMA= {1}  ";
 
 
     @Autowired
@@ -80,16 +82,38 @@ public class AutoCollectorMetadataPostgresql implements AutoCollectorMetadata{
             tableNameList.forEach(empNo -> parameters.add("?"));
             String commaSepParameters = String.join(",", parameters);
 
-            String   selectQuery = String.format(SELECT_ALL_PARTITION, commaSepParameters );
+            String selectQuery = String.format(SELECT_ALL_PARTITION, commaSepParameters);
             stm = connection.prepareStatement(selectQuery);
             addParams(stm, tableNameList);
 
             log.info("sql:   {}", selectQuery);
             rs = stm.executeQuery();
             partitionMetadataVOS = DBUtils.convertList(rs, MetadataPartitionDTO.class);
-        }  finally {
+        } finally {
             dBConfig.realeaseResources(stm, rs);
         }
+
+        List<MetadataPartitionDTO> firstPartitionListHasSub = new ArrayList();
+        List<MetadataPartitionDTO> secondPartitionList = new ArrayList();
+        //有子分区的分区
+        firstPartitionListHasSub = partitionMetadataVOS.stream().filter(partitionMetadataVO -> partitionMetadataVO.getHasChild().equals("true")).collect(Collectors.toList());
+        if (CollectionUtils.isNotEmpty(firstPartitionListHasSub)) {
+            List<String> firstPartitionNameList = firstPartitionListHasSub.stream().map(MetadataPartitionDTO::getName).collect(Collectors.toList());
+            Map<String, MetadataPartitionDTO> partitonnameToPartiton = firstPartitionListHasSub.stream().collect(Collectors.toMap(MetadataPartitionDTO::getName, a -> a, (k1, k2) -> k1));
+
+            secondPartitionList = getPartitionMetadata(connection, firstPartitionNameList);
+
+
+            for (MetadataPartitionDTO secondPartition : secondPartitionList) {
+                String secondPartitionName = secondPartition.getName();
+                String parentPartitonName = secondPartition.getTableCode();
+                Long size = secondPartition.getSize();
+                secondPartition.setName(partitonnameToPartiton.get(parentPartitonName).getName() + "/" + secondPartitionName);
+            }
+            partitionMetadataVOS.addAll(secondPartitionList);
+        }
+
+
         return partitionMetadataVOS;
     }
 

@@ -25,7 +25,7 @@ public class AutoCollectorMetadataPostgresqlTest extends  BaseJunit {
         Connection connection = dbConfig.getSimpleConnection(url, "postgres", "abc123");
 
 
-       List<MetadataPartitionDTO> partitionDTOList= autoCollectorMetadata.getPartitionMetadata(connection, Arrays.asList("order_list"));
+       List<MetadataPartitionDTO> partitionDTOList= autoCollectorMetadata.getPartitionMetadata(connection, Arrays.asList("order_list","s"));
         printResult(partitionDTOList);
     }
 }
