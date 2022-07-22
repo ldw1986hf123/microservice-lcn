@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * 描述: 认证接口
  *
- * @Auther: lzx
+ * @Auther: lzxouhhuhu
  * @Date: 2019/7/9 13:53
  */
 @RestController
