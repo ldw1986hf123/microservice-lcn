@@ -7,9 +7,9 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 
 /**
- * Copyright © DEEPEXI Technologies Co., Ltd. 2018-2020. All rights reserved.
+ *   
  *
- * @Author liangchaohua
+ * @Author 卢丹文
  * @Date 2020/11/5 10:21
  * @Description 元数据类目信息
  */

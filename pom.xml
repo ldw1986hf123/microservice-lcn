@@ -100,7 +100,6 @@
 		</dependencies>
 	</dependencyManagement>
 
-
 	<build>
 		<finalName>microservice</finalName>
 		<resources>

@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ldw.microservice.entity.Dept;
 import com.ldw.microservice.service.DeptSercice;
-//import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @RestController
 public class DeptController {

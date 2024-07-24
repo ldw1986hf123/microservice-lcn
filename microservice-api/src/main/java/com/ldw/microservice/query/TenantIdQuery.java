@@ -5,7 +5,7 @@ import lombok.Data;
 
 
 /**
- * Copyright © DEEPEXI Technologies Co., Ltd. 2018-2020. All rights reserved.
+ *   
  *
  * @Author Fucy
  * @Date 2021/1/6 10:13

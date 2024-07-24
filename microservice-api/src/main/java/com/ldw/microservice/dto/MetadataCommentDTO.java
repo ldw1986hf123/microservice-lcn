@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 
 /**
- * Copyright © DEEPEXI Technologies Co., Ltd. 2018-2020. All rights reserved.
+ *   
  *
  * @description: 注释
  * @author: wengguifang

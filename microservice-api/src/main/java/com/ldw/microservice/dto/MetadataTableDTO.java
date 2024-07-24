@@ -11,7 +11,7 @@ import java.util.List;
 
 
 /**
- * Copyright © DEEPEXI Technologies Co., Ltd. 2018-2020. All rights reserved.
+ *   
  *
  * @description: 表元数据
  * @author: wenggufiang
