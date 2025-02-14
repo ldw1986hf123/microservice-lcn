@@ -1,0 +1,28 @@
+docker 安装不依赖zookeeper的kafka
+1.Kafka 2.8.0 及以上版本支持 KRaft（Kafka Raft）模式，所以我们可以直接使用官方 bitnami/kafka 或 confluentinc/cp-kafka 镜像。
+  这里推荐使用 bitnami/kafka，它更容易配置：
+
+
+
+
+2. 运行 KRaft 模式的 Kafka 容器
+docker run -d --name kafka \
+  -p 9092:9092 \
+  -e KAFKA_CFG_NODE_ID=1 \
+  -e KAFKA_CFG_PROCESS_ROLES=controller,broker \
+  -e KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@127.0.0.1:9093 \
+  -e KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093 \
+  -e KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 \
+  -e KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER \
+  -e KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT \
+  bitnami/kafka:latest
+KAFKA_CFG_PROCESS_ROLES=controller,broker：表示此实例既是控制器又是代理（Broker）。
+KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@127.0.0.1:9093：定义 Kafka Raft 控制器节点。
+KAFKA_CFG_LISTENERS & KAFKA_CFG_ADVERTISED_LISTENERS：配置 Kafka 监听地址。
+KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT：配置代理之间的通信方式。
+
+
+4. 验证 Kafka 是否运行
+docker logs kafka
+如果看到 Kafka Server started，表示 Kafka 启动成功。
+
