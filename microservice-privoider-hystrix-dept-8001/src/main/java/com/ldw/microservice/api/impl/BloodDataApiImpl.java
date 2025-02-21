@@ -3,7 +3,6 @@ package com.ldw.microservice.api.impl;
 import com.ldw.microservice.api.BloodDataApi;
 import com.ldw.microservice.config.InternalPayload;
 import com.ldw.microservice.dto.ColumnBloodDTO;
-import com.ldw.microservice.service.ColumnBloodBizService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

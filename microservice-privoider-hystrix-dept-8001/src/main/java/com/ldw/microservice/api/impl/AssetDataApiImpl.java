@@ -4,7 +4,6 @@ package com.ldw.microservice.api.impl;
 import com.ldw.microservice.api.AssetDataApi;
 import com.ldw.microservice.config.InternalPayload;
 import com.ldw.microservice.dto.*;
-import com.ldw.microservice.service.CommonEsBizService;
 import io.micrometer.core.instrument.util.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -28,10 +28,10 @@
 		</dependency>
 
 		<!-- Druid -->
-		<dependency>
+	<!--	<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
-		</dependency>
+		</dependency>-->
 		<!-- Druid -->
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
