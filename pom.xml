@@ -8,15 +8,12 @@
 	<modules>
 		<module>microservice-api</module>
 		<module>microservice-privoider-dept-8001</module>
-		<module>microservice-comsumer-dept-80</module>
 		<module>microservice-eureka-7001</module>
 		<module>microservice-eureka-7002</module>
 		<module>microservice-eureka-7003</module>
 		<module>microservice-privoider-dept-8002</module>
-		<module>microservice-privoider-dept-8003</module>
 		<module>microservice-comsumer-dept-feign</module>
 		<module>microservice-privoider-hystrix-dept-8001</module>
-		<module>microservice-comsumer-dept-hystrix-dashbord</module>
 		<module>microservice-zuul-gateway-9527</module>
 		<module>microservice-lcnTransactionManager-7970</module>
 	</modules>
@@ -25,6 +22,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>5.0.0.RELEASE</spring.version>
+		<java.version>1.8</java.version>
 		<junit.version>4.12</junit.version>
 		<log4j.version>1.2.17</log4j.version>
 	</properties>
@@ -46,19 +44,12 @@
 				<scope>import</scope>
 			</dependency>
 
-			<!-- Mysql -->
-			<!--<dependency>-->
-				<!--<groupId>mysql</groupId>-->
-				<!--<artifactId>mysql-connector-java</artifactId>-->
-				<!--<version>5.0.4</version>-->
-			<!--</dependency>-->
-
 			<!-- Druid -->
-			<dependency>
+		<!--	<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>druid</artifactId>
-				<version>1.0.31</version>
-			</dependency>
+				<version>1.1.10</version>
+			</dependency>-->
 
 			<!-- spring-mybatis -->
 			<dependency>
@@ -70,10 +61,7 @@
 				<groupId>org.mybatis.spring.boot</groupId>
 				<artifactId>spring-boot-starter-web</artifactId>
 			</dependency>
-			<dependency>
-				<groupId>org.mybatis.spring.boot</groupId>
-				<artifactId>spring-boot-starter-jetty</artifactId>
-			</dependency>
+
 			<dependency>
 				<groupId>org.mybatis.spring.boot</groupId>
 				<artifactId>spring-boot-starter-test</artifactId>
@@ -109,15 +97,7 @@
 			</resource>
 		</resources>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<configuration>
-					<delimiters>
-						<delimiter>$</delimiter>
-					</delimiters>
-				</configuration>
-			</plugin>
+
 		</plugins>
 	</build>
 </project>
