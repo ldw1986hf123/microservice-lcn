@@ -1,0 +1,1 @@
+完整的微服务项目，基于spring全家桶，springCloud。并继承了IM即时通讯服务端
