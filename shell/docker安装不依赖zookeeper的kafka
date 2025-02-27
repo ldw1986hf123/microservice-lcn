@@ -26,3 +26,5 @@ KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT：配置代理之间的通信方�
 docker logs kafka
 如果看到 Kafka Server started，表示 Kafka 启动成功。
 
+
+
