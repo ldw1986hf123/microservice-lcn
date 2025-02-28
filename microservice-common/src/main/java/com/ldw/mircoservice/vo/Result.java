@@ -19,10 +19,10 @@ public class Result<T> {
 
     // 静态方法，便于快速构造成功或失败结果
     public static <T> Result<T> success(T data) {
-        return new Result<>(200, "Success", data);
+        return new Result<T>(200, "Success", data);
     }
 
     public static <T> Result<T> fail(int code, String message) {
-        return new Result<>(code, message, null);
+        return new Result<T>(code, message, null);
     }
 }
