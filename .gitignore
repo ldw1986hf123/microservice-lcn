@@ -1,3 +1,4 @@
 /microservice-privoider-config-dept-8001/*.iml
 /microservice-api/target
 target
+/.idea/
