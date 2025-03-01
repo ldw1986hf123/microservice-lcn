@@ -11,7 +11,6 @@
 		<module>microservice-eureka-7002</module>
 		<module>microservice-eureka-7003</module>
 		<module>microservice-zuul-gateway-9527</module>
-		<module>microservice-lcnTransactionManager-7970</module>
 	</modules>
 
 
