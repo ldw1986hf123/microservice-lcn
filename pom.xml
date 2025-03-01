@@ -6,14 +6,10 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
-		<module>microservice-api</module>
 		<module>microservice-privoider-dept-8001</module>
 		<module>microservice-eureka-7001</module>
 		<module>microservice-eureka-7002</module>
 		<module>microservice-eureka-7003</module>
-		<module>microservice-privoider-dept-8002</module>
-		<module>microservice-comsumer-dept-feign</module>
-		<module>microservice-privoider-hystrix-dept-8001</module>
 		<module>microservice-zuul-gateway-9527</module>
 		<module>microservice-lcnTransactionManager-7970</module>
 	</modules>
