@@ -7,4 +7,5 @@ docker build -t microservice-uc:latest .
 
 # 拉取新镜像并重启 service-user
 #docker-compose pull microservice-uc
+cd /home/steven/microservice-lcn
 docker-compose up -d microservice-uc
