@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  service-user:
+  microservice-uc:
     image: microservice-uc:latest
     container_name: microservice-uc
     restart: always
