@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  service-user:
+    image: your-dockerhub-username/service-user:latest
+    container_name: microservice-uc
+    restart: always
+    ports:
+      - "8081:8001"
+
+  service-order:
+    image: your-dockerhub-username/service-order:latest
+    container_name: service-order
+    restart: always
+    ports:
+      - "8082:8080"
+
+  service-product:
+    image: your-dockerhub-username/service-product:latest
+    container_name: service-product
+    restart: always
+    ports:
+      - "8083:8080"
+
+volumes:
+  mysql_data:
