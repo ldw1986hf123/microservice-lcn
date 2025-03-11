@@ -1,4 +1,5 @@
 cd /home/steven/microservice-uc
+git pull
 mvn clean package -DskipTests
 docker build -t microservice-uc:latest .
 
@@ -8,5 +9,4 @@ docker build -t microservice-uc:latest .
 # 拉取新镜像并重启 service-user
 #docker-compose pull microservice-uc
 cd /home/steven/microservice-lcn
-git pull
 docker-compose up -d microservice-uc
