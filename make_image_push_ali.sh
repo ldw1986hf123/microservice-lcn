@@ -11,3 +11,4 @@ docker build -t microservice-uc:latest .
 cd /home/steven/microservice-lcn
 
 docker-compose up -d microservice-uc   #与docker-compose.yml中定义的service对应
+tail -500f /home/steven/microservice-uc/logs/myapp-info.log
