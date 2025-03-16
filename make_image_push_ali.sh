@@ -8,8 +8,6 @@ docker build -t $1:latest .
 
 # 拉取新镜像并重启 service-user
 #docker-compose pull microservice-uc
-cd /home/steven/$1
-
 # shellcheck disable=SC2016
 echo $1 重新打包启动
 docker-compose up -d $1   #与docker-compose.yml中定义的service对应
