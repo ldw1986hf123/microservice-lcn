@@ -1,3 +1,7 @@
+echo '先更新lcn自己'
+git pull
+
+
 cd /home/steven/$1
 git pull
 mvn clean package -DskipTests
