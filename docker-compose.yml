@@ -9,11 +9,11 @@ services:
       - "8001:8001"
 
   service-order:
-    image: your-dockerhub-username/service-order:latest
-    container_name: service-order
+    image: microservice-order:latest
+    container_name: microservice-order
     restart: always
     ports:
-      - "8082:8080"
+      - "8002:8002"
 
   service-product:
     image: your-dockerhub-username/service-product:latest
