@@ -12,15 +12,8 @@ spring:
     url: jdbc:mysql://localhost:3306/cloudDB01
     username: root
     password:
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:7001/eureka/,http://localhost:7002/eureka/,http://localhost:7003/eureka/
-  instance:
-    instance-id: microservice_dept_8001
-    prefer-ip-address: true
-info:
-  app.name: microservice
-  company.name: www.ldw.com
-  build.artifactId: $project.artifactId$
-  build.version: $project.version$
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.172.129:8848
+        namespace: dev  # 或者具体的 namespace ID

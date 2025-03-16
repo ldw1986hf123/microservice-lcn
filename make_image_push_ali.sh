@@ -10,5 +10,7 @@ docker build -t microservice-uc:latest .
 #docker-compose pull microservice-uc
 cd /home/steven/microservice-lcn
 
-docker-compose up -d microservice-uc   #与docker-compose.yml中定义的service对应
+# shellcheck disable=SC2016
+echo '$1' 重新打包启动
+docker-compose up -d '$1'   #与docker-compose.yml中定义的service对应
 tail -500f /home/steven/microservice-uc/logs/myapp-info.log
