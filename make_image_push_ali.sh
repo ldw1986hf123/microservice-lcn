@@ -1,6 +1,7 @@
 echo '先更新lcn自己'
 git pull
 
+echo '更新对应的项目'  $1
 
 cd /home/steven/$1
 git pull
