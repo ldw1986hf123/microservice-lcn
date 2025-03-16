@@ -13,4 +13,4 @@ cd /home/steven/$1
 # shellcheck disable=SC2016
 echo $1 重新打包启动
 docker-compose up -d $1   #与docker-compose.yml中定义的service对应
-tail -500f /home/steven/$1/logs/myapp-info.log
+docker logs -f $1
