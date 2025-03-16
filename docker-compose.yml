@@ -8,7 +8,7 @@ services:
     ports:
       - "8001:8001"
 
-  service-order:
+  microservice-order:
     image: microservice-order:latest
     container_name: microservice-order
     restart: always
