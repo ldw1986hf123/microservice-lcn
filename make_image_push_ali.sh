@@ -7,7 +7,7 @@ git pull
 
 echo '更新对应的项目'  $1
 
-cd "PROJECT_DIR"/$1
+cd "$PROJECT_DIR"/$1
 git pull
 mvn clean package -DskipTests
 docker build -t $1:latest .
@@ -17,7 +17,7 @@ docker build -t $1:latest .
 
 # 拉取新镜像并重启 service-user
 #docker-compose pull microservice-uc
-cd "PROJECT_DIR"/microservice-lcn
+cd "$PROJECT_DIR"/microservice-lcn
 
 # shellcheck disable=SC2016
 echo $1 重新打包启动
