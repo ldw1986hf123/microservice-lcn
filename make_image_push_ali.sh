@@ -1,9 +1,11 @@
+# 脚本遇到任何错误就退出
+set -e
 echo '先更新lcn自己'
 git pull
 
 echo '更新对应的项目'  $1
 
-cd /home/steven/$1
+cd /home/ldw/code/$1
 git pull
 mvn clean package -DskipTests
 docker build -t $1:latest .
